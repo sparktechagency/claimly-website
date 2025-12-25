@@ -8,7 +8,7 @@ const Hero = () => {
   return (
     <div>
       {/* Hero Section */}
-      <div className="lg:flex items-center mx-auto">
+      <div className="lg:flex justify-around items-center mx-auto">
         {/* Left side */}
         <div className="flex flex-col flex-1 gap-2 md:gap-8">
           {/* top title */}
@@ -53,7 +53,7 @@ const Hero = () => {
           </div>
         </div>
         {/* Right side */}
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 flex items-end justify-end">
           <Image src={HeroImage} alt="Hero Image" />
         </div>
       </div>
