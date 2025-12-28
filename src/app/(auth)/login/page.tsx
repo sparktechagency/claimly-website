@@ -45,7 +45,7 @@ const Page: React.FC = () => {
                   type="email"
                   required
                   placeholder="Enter email"
-                  className="w-full text-sm text-[#1E293B] bg-slate-100 focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
+                  className="w-full text-sm text-[#1E293B] bg-whitefocus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
                 />
               </div>
 
@@ -60,7 +60,7 @@ const Page: React.FC = () => {
                     type={showPassword ? "text" : "password"}
                     required
                     placeholder="Enter password"
-                    className="w-full text-sm text-[#1E293B] bg-slate-100 focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
+                    className="w-full text-sm text-[#1E293B] bg-whitefocus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
                   />
 
                   {/* Eye Icon */}
