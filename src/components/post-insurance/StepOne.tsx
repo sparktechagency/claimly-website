@@ -10,20 +10,34 @@ interface StepProps {
 
 const StepOne: React.FC<StepProps> = ({ onNext }) => {
     const [insurerName, setInsurerName] = React.useState("");
+    const [customInsurerName, setCustomInsurerName] = React.useState("");
     const [policyType, setPolicyType] = React.useState("");
+    const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
 
     const insurers = ["NRMA", "AAMI", "Allianz", "Budget Direct", "Suncorp", "Other"];
     const policies = ["Comprehensive", "Comprehensive Basic", "Third Party Fire & Theft", "Third Party Property Damage", "Other / Not sure"];
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        const newErrors: { [key: string]: string } = {};
+
+        if (!insurerName) newErrors.insurer = "Please select your insurer";
+        if (insurerName === "Other" && !customInsurerName.trim()) newErrors.customInsurer = "Please enter your insurer name";
+        if (!policyType) newErrors.policy = "Please select your policy type";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        setErrors({});
         onNext();
     };
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex gap-2">
-                <div className="w-6 mt-2">
+                <div className="w-5 mt-2">
                     <Image src={insurer} alt="insurer" width={100} height={100} />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -32,12 +46,19 @@ const StepOne: React.FC<StepProps> = ({ onNext }) => {
                 </div>
             </div>
 
-            <CustomDropDown
-                label="Who are you insured with?"
-                options={insurers}
-                selected={insurerName}
-                onSelect={setInsurerName}
-            />
+            <div>
+                <CustomDropDown
+                    label="Who are you insured with?"
+                    options={insurers}
+                    selected={insurerName}
+                    onSelect={(val) => {
+                        setInsurerName(val);
+                        setErrors(prev => ({ ...prev, insurer: "" }));
+                    }}
+                    error={!!errors.insurer}
+                />
+                {errors.insurer && <p className="text-red-500 text-xs mt-1">{errors.insurer}</p>}
+            </div>
 
             {insurerName === "Other" && (
                 <div>
@@ -45,21 +66,33 @@ const StepOne: React.FC<StepProps> = ({ onNext }) => {
                     <input
                         type="text"
                         placeholder="Enter insurer name"
-                        className="w-full px-4 py-3 border border-[#DBEAFE] rounded-[12px] outline-none text-[#64748B] bg-white"
-                        required
+                        value={customInsurerName}
+                        onChange={(e) => {
+                            setCustomInsurerName(e.target.value);
+                            setErrors(prev => ({ ...prev, customInsurer: "" }));
+                        }}
+                        className={`w-full px-4 py-3 border rounded-[12px] outline-none text-[#64748B] bg-white ${errors.customInsurer ? "border-red-500" : "border-[#DBEAFE]"}`}
                     />
+                    {errors.customInsurer && <p className="text-red-500 text-xs mt-1">{errors.customInsurer}</p>}
                 </div>
             )}
 
-            <CustomDropDown
-                label="What type of policy is this?"
-                options={policies}
-                selected={policyType}
-                onSelect={setPolicyType}
-            />
+            <div>
+                <CustomDropDown
+                    label="What type of policy is this?"
+                    options={policies}
+                    selected={policyType}
+                    onSelect={(val) => {
+                        setPolicyType(val);
+                        setErrors(prev => ({ ...prev, policy: "" }));
+                    }}
+                    error={!!errors.policy}
+                />
+                {errors.policy && <p className="text-red-500 text-xs mt-1">{errors.policy}</p>}
+            </div>
 
             <div className="flex gap-3 pt-4">
-                <button type="submit" className="px-6 py-2 bg-amber-300 text-white font-medium rounded hover:bg-amber-400">
+                <button type="submit" className="px-6 py-2 bg-[#2563EB] text-white font-medium rounded hover:bg-[#467bec]">
                     Next
                 </button>
             </div>

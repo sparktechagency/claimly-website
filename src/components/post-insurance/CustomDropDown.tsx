@@ -6,9 +6,10 @@ interface CustomDropDownProps {
     options: string[];
     selected: string;
     onSelect: (val: string) => void;
+    error?: boolean;
 }
 
-const CustomDropDown: React.FC<CustomDropDownProps> = ({ label, options, selected, onSelect }) => {
+const CustomDropDown: React.FC<CustomDropDownProps> = ({ label, options, selected, onSelect, error }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -28,7 +29,7 @@ const CustomDropDown: React.FC<CustomDropDownProps> = ({ label, options, selecte
             <div className="relative" ref={dropdownRef}>
                 <div
                     onClick={() => setIsOpen(!isOpen)}
-                    className="flex justify-between items-center border border-[#DBEAFE] w-full rounded-[12px] px-4 py-3 bg-white text-[#64748B] cursor-pointer outline-none"
+                    className={`flex justify-between items-center border ${error ? "border-red-500" : "border-[#DBEAFE]"} w-full rounded-[12px] px-4 py-3 bg-white text-[#64748B] cursor-pointer outline-none`}
                 >
                     <span className="">{selected || "Select One"}</span>
                     <svg
