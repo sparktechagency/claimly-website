@@ -78,7 +78,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onItemClick }) => {
               onClick={onItemClick}
             />
             <DropdownItem
-              href="/dashboard/profile"
+              href="/my_profile"
               icon={<User size={18} />}
               label="My Profile"
               onClick={onItemClick}
