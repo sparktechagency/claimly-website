@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../shared/Button";
 import right_icon from "../../../public/icon_right.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const Understand = () => {
   return (
@@ -28,7 +29,8 @@ const Understand = () => {
 
         {/* right section */}
         <div className="flex-1 text-center">
-          <Button
+       <Link href="/my_claims">
+             <Button
             rightIcon={
               <Image
                 src={right_icon}
@@ -44,6 +46,7 @@ const Understand = () => {
           >
             Analyse My Claim
           </Button>
+       </Link>
         </div>
       </div>
     </div>

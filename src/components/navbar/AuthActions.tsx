@@ -66,7 +66,7 @@ const AuthActions: React.FC<AuthActionsProps> = ({
             {/* Menu */}
             <div className="mt-3 flex flex-col gap-[3px]">
               <MenuItem
-                href="/dashboard/claims"
+                href="/my_claims"
                 icon={<FileText size={18} />}
                 label="My Claims"
               />
@@ -142,7 +142,7 @@ const AuthActions: React.FC<AuthActionsProps> = ({
           {/* Menu */}
           <div className="mt-4 flex flex-col gap-[3px] text-[#64748B]">
             <MobileItem
-              href="/dashboard/claims"
+              href="/my_claims"
               icon={<FileText />}
               label="My Claims"
             />

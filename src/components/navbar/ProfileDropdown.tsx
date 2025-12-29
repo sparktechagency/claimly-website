@@ -72,7 +72,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onItemClick }) => {
           {/* Menu */}
           <div className="p-2 space-y-1">
             <DropdownItem
-              href="/dashboard/claims"
+              href="/my_claims"
               icon={<FileText size={18} />}
               label="My Claims"
               onClick={onItemClick}

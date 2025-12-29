@@ -3,6 +3,7 @@ import Button from "../shared/Button";
 import HeroImage from "../../../public/hero_imge.png";
 import Image from "next/image";
 import { InfoIcon } from "../icons-svg/customIcons";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -33,9 +34,11 @@ const Hero = () => {
             </div>
 
             <div>
-              <Button variant="primary" size="lg" className="font-medium">
+             <Link href='/my_claims'>
+                 <Button variant="primary" size="lg" className="font-medium">
                 Analyse My Claim
               </Button>
+             </Link>
             </div>
 
             <div className="flex items-center gap-1">
