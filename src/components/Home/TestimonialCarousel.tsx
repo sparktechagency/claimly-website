@@ -98,7 +98,7 @@ const TestimonialCarousel: React.FC = memo(() => {
             role="region"
             aria-label="Testimonials carousel"
         >
-            <div className="absolute hidden md:block bg-gradient-to-br from-[#1E293B] via-[#2563EB] to-[#2563EB] top-[50%] translate-y-[-50%] left-0 w-[50%] p-4 h-[600px]">
+            <div className="absolute hidden xl:block bg-gradient-to-br from-[#1E293B] via-[#2563EB] to-[#2563EB] top-[50%] translate-y-[-50%] left-0 w-[50%] p-4 h-[600px]">
                 <div className="w-full h-full bg-white"></div>
             </div>
             <div className="relative bg-white overflow-hidden max-w-screen-xl h-fit z-10 flex items-center justify-center px-4 py-8">
