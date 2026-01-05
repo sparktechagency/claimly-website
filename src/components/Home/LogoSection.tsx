@@ -25,7 +25,7 @@ const LogoSection = () => {
 
             <ul className="mt-2.5 space-y-2.5">
               {[
-                "Damage to your vehicle",
+                "Benchmarking your situation against AFCA decisions",
                 "Key considerations under the Insurance Contracts Act 1984 (Cth)",
                 "Insurer obligations under the General Insurance Code of Practice (GICOP)",
                 "Complaint obligations under ASIC Regulatory Guide 271 (RG 271)",

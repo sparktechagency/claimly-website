@@ -22,11 +22,7 @@ const Hero = () => {
             </h1>
             <div className="flex flex-col gap-4">
               <p className="default-text leading-normal!">
-                Fill out a short form, upload your documents and Claimly will
-                provide you with a plain-English report on how your insurer may
-                view your claim, what information usually matters most, and how
-                similar situations may typically be treated. Prepared and
-                delivered within 24 to 48 hours.
+                Fill out a short form, upload your documents and Claimly will provide you with a plain-English report on how your insurer may view your claim, what information usually matters most, and how similar situations may typically be treated.
               </p>
               <p className="default-text">
                 Prepared and delivered within 24 to 48 hours.
@@ -44,7 +40,7 @@ const Hero = () => {
             <div className="flex items-center gap-1">
               <InfoIcon fill="var(--secondary_text)" width={14} height={14} />
               <p className="default-text">
-                Prepared and delivered within 24 to 48 hours.
+                General information only - not legal or financial advice.
               </p>
             </div>
           </div>

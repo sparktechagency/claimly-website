@@ -11,7 +11,7 @@ import AuthActions from "../navbar/AuthActions";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // 🔑 temporary auth state (later replace with real auth)
+ 
   const isLogin = true;
 
 
