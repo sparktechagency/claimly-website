@@ -7,13 +7,10 @@ import Link from "next/link";
 import weblogo from "../../../public/brand_logo.svg";
 import AuthActions from "../navbar/AuthActions";
 
-
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
- 
-  const isLogin = true;
-
+  const isLogin = false;
 
   const pathname = usePathname();
 
@@ -40,10 +37,11 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`px-4 py-2 rounded text-sm font-medium transition ${pathname === link.href
+                className={`px-4 py-2 rounded text-sm font-medium transition ${
+                  pathname === link.href
                     ? "bg-[#2563EB] text-white"
                     : "text-gray-700 hover:bg-gray-100"
-                  }`}
+                }`}
               >
                 {link.name}
               </Link>
@@ -74,15 +72,17 @@ export default function Navbar() {
         <div className="lg:hidden">
           {/* Overlay */}
           <div
-            className={`fixed inset-0 bg-black/40 z-40 ${isMenuOpen ? "block" : "hidden"
-              }`}
+            className={`fixed inset-0 bg-black/40 z-40 ${
+              isMenuOpen ? "block" : "hidden"
+            }`}
             onClick={() => setIsMenuOpen(false)}
           />
 
           {/* Drawer */}
           <div
-            className={`fixed top-0 left-0 h-full w-[280px] bg-[#f5f7fa] z-50 transition-transform ${isMenuOpen ? "translate-x-0" : "-translate-x-full"
-              }`}
+            className={`fixed top-0 left-0 h-full w-[280px] bg-[#f5f7fa] z-50 transition-transform ${
+              isMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
           >
             <div className="p-6 flex flex-col h-full">
               {/* Header */}
@@ -98,10 +98,11 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-lg text-sm transition ${pathname === link.href
+                    className={`block px-4 py-3 rounded-lg text-sm transition ${
+                      pathname === link.href
                         ? "bg-[#2563EB] text-white"
                         : "text-gray-700 hover:bg-gray-100"
-                      }`}
+                    }`}
                   >
                     {link.name}
                   </Link>

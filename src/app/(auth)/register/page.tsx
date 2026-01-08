@@ -5,10 +5,95 @@ import React, { useState } from "react";
 import loginImage from "../../../../public/register.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form"
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
+import { Eye, EyeOff } from "lucide-react";
+import { useRegisterMutation } from "@/store/feature/authApi/authApi";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
+
+type Inputs = {
+  fullName: string
+  email: string
+  phone: string
+  password: string
+  confirmPassword: string
+}
 
 const Page: React.FC = () => {
+  const router = useRouter();
+  const [registerUser, { isLoading, isError, error }] = useRegisterMutation();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [passwordFocused, setPasswordFocused] = useState<boolean>(false);
+  const [phoneValue, setPhoneValue] = useState<string | undefined>("");
+
+
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm<Inputs>({
+    mode: "onChange"
+  })
+
+  // Watch password for live validation
+  const password = watch("password", "");
+
+  // Validation criteria
+  const validationCriteria = [
+    { label: "Minimum 8 characters", met: password.length >= 8 },
+    { label: "At least one uppercase letter", met: /[A-Z]/.test(password) },
+    { label: "At least one lowercase letter", met: /[a-z]/.test(password) },
+    { label: "At least one number", met: /\d/.test(password) },
+    { label: "At least one special character", met: /[@$!%*?&]/.test(password) },
+  ];
+
+  const isAllCriteriaMet = validationCriteria.every(c => c.met);
+
+  const handlePhoneChange = (value?: string) => {
+    setPhoneValue(value);
+
+    if (value) {
+      clearErrors("phone");
+    }
+  };
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const userData = {
+        ...data,
+        role: "NORMALUSER"
+      }
+      const result = await registerUser(userData).unwrap();
+      if (result?.success) {
+        localStorage.setItem("email", result?.data?.email);
+        toast.success(result?.message || "Registration successful", {
+          style: {
+            backgroundColor: "#dcfce7",
+            color: "#166534",
+            borderLeft: "6px solid #16a34a",
+          },
+        });
+        router.push("/verify_otp");
+      }
+    } catch (err: any) {
+      console.error("Failed to register", err?.data?.message);
+      toast.error(err?.data?.message || "Failed to register", {
+        style: {
+          backgroundColor: "#fee2e2",
+          color: "#991b1b",
+          borderLeft: "6px solid #dc2626",
+        },
+      });
+    }
+  };
 
   return (
     <div>
@@ -36,8 +121,8 @@ const Page: React.FC = () => {
             </p>
           </div>
 
-          <form>
-            <div className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="space-y-4">
 
               {/* Full Name */}
               <div>
@@ -46,10 +131,15 @@ const Page: React.FC = () => {
                 </label>
                 <input
                   type="text"
-                  required
+                  {...register("fullName", { required: "Full name is required" })}
                   placeholder="Enter full name"
-                  className="w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
+                  className={`w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border ${errors.fullName ? 'border-red-500' : 'border-[#DBEAFE]'} focus:border-blue-600 outline-none transition-all`}
                 />
+                <div className="h-4">
+                  {errors.fullName && (
+                    <p className="text-red-500 text-[11px] mt-1 font-medium">{errors.fullName.message}</p>
+                  )}
+                </div>
               </div>
 
               {/* Email */}
@@ -59,22 +149,36 @@ const Page: React.FC = () => {
                 </label>
                 <input
                   type="email"
-                  required
+                  {...register("email", {
+                    required: "Email is required"
+                  })}
                   placeholder="@esteban_schiller@gmail.com"
-                  className="w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
+                  className={`w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border ${errors.email ? 'border-red-500' : 'border-[#DBEAFE]'} focus:border-blue-600 outline-none transition-all`}
                 />
+                <div className="h-4">
+                  {errors.email && (
+                    <p className="text-red-500 text-[11px] mt-1 font-medium">{errors.email.message}</p>
+                  )}
+                </div>
               </div>
               {/* Phone */}
               <div>
                 <label className="text-[#1E293B]/70 text-[15px] font-medium mb-2 block">
                   Phone Number
                 </label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="+ 61 412 345 678"
+                <PhoneInput
+                  {...register("phone", { required: true })}
+                  defaultCountry="AU"
+                  placeholder="Enter phone number"
+                  value={phoneValue}
+                  onChange={handlePhoneChange}
                   className="w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
                 />
+                <div className="h-4">
+                  {errors.phone && (
+                    <p className="text-red-500 text-[11px] mt-1 font-medium">{"Phone number is required"}</p>
+                  )}
+                </div>
               </div>
 
               {/* Password */}
@@ -86,59 +190,50 @@ const Page: React.FC = () => {
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
-                    required
+                    {...register("password", {
+                      required: "Password is required",
+                      validate: () => isAllCriteriaMet || "Password does not meet all criteria"
+                    })}
+                    onFocus={() => setPasswordFocused(true)}
+                    onBlur={(e) => {
+                      register("password").onBlur(e);
+                      setPasswordFocused(false);
+                    }}
                     placeholder="Enter password"
-                    className="w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
+                    className={`w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-12 py-3.5 rounded-xl border ${errors.password ? 'border-red-500' : 'border-[#DBEAFE]'} focus:border-blue-600 outline-none transition-all`}
                   />
 
                   {/* Eye Icon */}
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
-                    className="absolute inset-y-0 right-3 flex items-center text-gray-400"
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-blue-600 transition-colors"
                   >
-                    {showPassword ? (
-                      // Eye Off
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.053.162-2.067.463-3.021M6.423 6.423A9.956 9.956 0 0112 5c5.523 0 10 4.477 10 10a9.956 9.956 0 01-1.423 5.077M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                    ) : (
-                      // Eye
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                      </svg>
-                    )}
+                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
+
+                <div className="h-4">
+                  {errors.password && (
+                    <p className="text-red-500 text-[11px] mt-1 font-medium">{errors.password.message}</p>
+                  )}
+                </div>
+
+                {/* Password Criteria Paragraph with Smooth Transition */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${passwordFocused ? "max-h-24 opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"
+                    }`}
+                >
+                  <p className="text-[11px] text-slate-500 leading-relaxed">
+                    Password must be at least <span className={password.length >= 8 ? "text-green-600 font-semibold" : "text-slate-600"}>8 characters</span> long,
+                    include <span className={/[A-Z]/.test(password) ? "text-green-600 font-semibold" : "text-slate-600"}>one uppercase letter</span>,
+                    <span className={/[a-z]/.test(password) ? "text-green-600 font-semibold" : "text-slate-600"}> one lowercase letter</span>,
+                    <span className={/\d/.test(password) ? "text-green-600 font-semibold" : "text-slate-600"}> one number</span>,
+                    and <span className={/[@$!%*?&]/.test(password) ? "text-green-600 font-semibold" : "text-slate-600"}>one special character</span>.
+                  </p>
+                </div>
               </div>
+
               {/* Confirm Password */}
               <div>
                 <label className="text-[#1E293B]/70 text-[15px] font-medium mb-2 block">
@@ -148,62 +243,35 @@ const Page: React.FC = () => {
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
-                    required
-                    placeholder="Enter password"
-                    className="w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
+                    {...register("confirmPassword", {
+                      required: "Please confirm your password",
+                      validate: (val) => val === password || "Passwords do not match"
+                    })}
+                    placeholder="Confirm password"
+                    className={`w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-12 py-3.5 rounded-xl border ${errors.confirmPassword ? 'border-red-500' : 'border-[#DBEAFE]'} focus:border-blue-600 outline-none transition-all`}
                   />
 
                   {/* Eye Icon */}
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword((prev) => !prev)}
-                    className="absolute inset-y-0 right-3 flex items-center text-gray-400"
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-blue-600 transition-colors"
                   >
-                    {showConfirmPassword ? (
-                      // Eye Off
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M13.875 18.825A10.05 10.05 0 0112 19c-5.523 0-10-4.477-10-10 0-1.053.162-2.067.463-3.021M6.423 6.423A9.956 9.956 0 0112 5c5.523 0 10 4.477 10 10a9.956 9.956 0 01-1.423 5.077M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                    ) : (
-                      // Eye
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                      </svg>
-                    )}
+                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
+                </div>
+
+                <div className="h-4">
+                  {errors.confirmPassword && (
+                    <p className="text-red-500 text-[11px] mt-1 font-medium">
+                      {errors.confirmPassword.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
             </div>
-             {/* Register */}
+            {/* Register */}
             <p className="text-sm mt-3 text-slate-600">
               Already have an account?
               <Link
@@ -217,12 +285,16 @@ const Page: React.FC = () => {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full mt-5 py-3 rounded-md bg-[#2563EB]/80 hover:bg-[#2563EB] text-white text-sm font-medium transition"
+              disabled={isLoading || !isAllCriteriaMet}
+              className={`w-full mt-5 py-3 rounded-md text-white text-sm font-medium transition ${isLoading || !isAllCriteriaMet ? "bg-slate-300 cursor-not-allowed" : "bg-[#2563EB]/80 hover:bg-[#2563EB]"
+                }`}
             >
-              Next
+              {isLoading ? "Creating Account..." : "Next"}
             </button>
 
-           
+
+
+
           </form>
         </div>
       </div>

@@ -4,12 +4,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import verifyImage from "../../../../public/verify_email.svg";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useVerifyRegisterOtpMutation } from "@/store/feature/authApi/authApi";
+import { toast } from "sonner";
 
 const VerifyOtp: React.FC = () => {
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
-
+  const [verifyRegisterOtpMutation, { isLoading }] = useVerifyRegisterOtpMutation();
+  const router = useRouter();
   // Set focus on the first input on mount
   useEffect(() => {
     if (inputRefs.current[0]) {
@@ -19,13 +22,13 @@ const VerifyOtp: React.FC = () => {
 
   const handleChange = (element: HTMLInputElement, index: number) => {
     const value = element.value;
-    if (isNaN(Number(value))) return; 
+    if (isNaN(Number(value))) return;
 
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
 
-   
+
     if (value !== "" && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
@@ -54,11 +57,49 @@ const VerifyOtp: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const code = otp.join("");
-    console.log("Submitted OTP:", code);
-    // Add verification logic here
+
+    if (code.length !== 6) {
+      toast.error("Please enter a valid 6-digit OTP", {
+        style: {
+          backgroundColor: "#fee2e2",
+          color: "#991b1b",
+          borderLeft: "6px solid #991b1b",
+        },
+      });
+      return;
+    }
+
+    const userData = {
+      email: localStorage.getItem("email"),
+      otp: code
+    };
+
+    try {
+      const result = await verifyRegisterOtpMutation(userData).unwrap();
+      if (result?.success) {
+        toast.success(result?.message || "OTP verified successfully", {
+          style: {
+            backgroundColor: "#dcfce7",
+            color: "#166534",
+            borderLeft: "6px solid #166534",
+          },
+        });
+        // Navigate to login or dashboard after successful verification
+        router.push("/login");
+      }
+    } catch (err: any) {
+      const errorMessage = err?.data?.message || "OTP verification failed. Please try again.";
+      toast.error(errorMessage, {
+        style: {
+          backgroundColor: "#fee2e2",
+          color: "#991b1b",
+          borderLeft: "6px solid #991b1b",
+        },
+      });
+    }
   };
 
   return (
@@ -124,16 +165,14 @@ const VerifyOtp: React.FC = () => {
               </div>
 
               {/* Submit Button */}
-              <Link href="/reset_password">
               <button
                 type="submit"
                 className="w-full py-3.5 rounded-xl bg-[#2563EB]/80 hover:bg-[#2563EB] text-white text-sm font-semibold transition-all shadow-lg active:scale-[0.98]"
               >
-                Verify
+               {isLoading ? "Verifying..." : "Verify"}
               </button>
-              </Link>
 
-             
+
             </div>
           </form>
         </div>

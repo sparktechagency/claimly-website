@@ -16,6 +16,8 @@ export const metadata: Metadata = {
 };
 
 import LayoutWrapper from "@/components/shared/LayoutWrapper";
+import ReduxProvider from "@/store/ReduxProvider";
+import { Toaster } from "sonner";
 
 export default function RootLayout({
   children,
@@ -27,9 +29,13 @@ export default function RootLayout({
       <body
         className={`${nunito.variable} antialiased`}
       >
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
+        <ReduxProvider>
+          <LayoutWrapper>
+            <Toaster position="top-right" richColors />
+            {children}
+          </LayoutWrapper>
+        </ReduxProvider>
+
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+
 :root {
   /* Font Variables */
   --font-nunito: 'Nunito', sans-serif;
@@ -142,6 +143,15 @@ body {
 
 .section-padding {
   @apply py-12 md:py-20 lg:py-28
+}
+
+.PhoneInputInput{
+   border: none !important;
+   outline: none !important;
+  /* :focus { outline: none !important; box-shadow: none !important; } */
+}
+.PhoneInputCountrySelect {
+  border: none !important;
 }
 
 /* .recharts-layer {
