@@ -76,19 +76,29 @@ const VerifyOtp: React.FC = () => {
       email: localStorage.getItem("email"),
       otp: code
     };
-
+    console.log(userData)
     try {
       const result = await verifyRegisterOtpMutation(userData).unwrap();
+      console.log("token data",result)
       if (result?.success) {
-        toast.success(result?.message || "OTP verified successfully", {
+        // Store the access token for automatic login
+        if (result?.data?.accessToken) {
+          localStorage.setItem("accessToken", result.data.accessToken);
+        }
+
+        // Clear the stored email
+        // localStorage.removeItem("email");
+
+        toast.success(result?.message || "OTP verified successfully! Welcome!", {
           style: {
             backgroundColor: "#dcfce7",
             color: "#166534",
             borderLeft: "6px solid #166534",
           },
         });
-        // Navigate to login or dashboard after successful verification
-        router.push("/login");
+
+        // Navigate to home page (user is now logged in)
+        router.push("/");
       }
     } catch (err: any) {
       const errorMessage = err?.data?.message || "OTP verification failed. Please try again.";
@@ -169,7 +179,7 @@ const VerifyOtp: React.FC = () => {
                 type="submit"
                 className="w-full py-3.5 rounded-xl bg-[#2563EB]/80 hover:bg-[#2563EB] text-white text-sm font-semibold transition-all shadow-lg active:scale-[0.98]"
               >
-               {isLoading ? "Verifying..." : "Verify"}
+                {isLoading ? "Verifying..." : "Verify"}
               </button>
 
 

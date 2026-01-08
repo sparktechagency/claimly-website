@@ -1,13 +1,53 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import loginImage from "../../../../public/login.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useLoginMutation } from "@/store/feature/authApi/authApi";
+import { toast } from "sonner";
+
+type Inputs = {
+  email: string
+  password: string
+  rememberMe: boolean
+}
 
 const Page: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [login, { isLoading }] = useLoginMutation() 
+   const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<Inputs>()
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      const response = await login(data)
+      if(response?.data?.success){
+        localStorage.setItem("accessToken", response?.data?.data?.accessToken)
+        toast.success(response?.data?.message || "Registration successful", {
+                 style: {
+                   backgroundColor: "#dcfce7",
+                   color: "#166534",
+                   borderLeft: "6px solid #16a34a",
+                 },
+               });
+        console.log( response?.data?.data?.accessToken)
+      }
+    } catch (error:any) {
+       toast.error(error?.data?.message || "Failed to register", {
+              style: {
+                backgroundColor: "#fee2e2",
+                color: "#991b1b",
+                borderLeft: "6px solid #dc2626",
+              },
+            });
+    }
+  }
 
   return (
     <div>
@@ -35,7 +75,7 @@ const Page: React.FC = () => {
             </p>
           </div>
 
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-6">
               {/* Email */}
               <div>
@@ -43,6 +83,7 @@ const Page: React.FC = () => {
                   Email
                 </label>
                 <input
+                {...register("email", { required: true })}
                   type="email"
                   required
                   placeholder="Enter email"
@@ -58,6 +99,7 @@ const Page: React.FC = () => {
 
                 <div className="relative">
                   <input
+                  {...register("password", { required: true })}
                     type={showPassword ? "text" : "password"}
                     required
                     placeholder="Enter password"
@@ -116,7 +158,7 @@ const Page: React.FC = () => {
               {/* Remember + Forgot */}
               <div className="flex justify-between items-center">
                 <label className="flex items-center gap-2 text-sm text-[#1E293B]/70">
-                  <input type="checkbox" className="rounded" />
+                  <input {...register("rememberMe")} type="checkbox" className="rounded" />
                   Remember me
                 </label>
 
@@ -134,7 +176,7 @@ const Page: React.FC = () => {
               type="submit"
               className="w-full mt-8 py-3 rounded-md bg-[#2563EB]/80 hover:bg-[#2563EB] text-white text-sm font-medium transition"
             >
-              Sign in
+              {isLoading ? "Loading..." : "Sign in"}
             </button>
 
             {/* Register */}

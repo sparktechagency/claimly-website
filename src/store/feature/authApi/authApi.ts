@@ -19,7 +19,15 @@ const authApi = createApi({
         }),
         verifyRegisterOtp: builder.mutation<TResponse<any>, any>({
             query: (userData: any) => ({
-                url: "/auth/verify-otp",
+                url: "/auth/verify-email-otp",
+                method: "POST",
+                body: userData
+            }),
+            invalidatesTags: ["Auth"]
+        }),
+        login: builder.mutation<TResponse<any>, any>({
+            query: (userData: any) => ({
+                url: "/auth/login",
                 method: "POST",
                 body: userData
             }),
@@ -28,6 +36,9 @@ const authApi = createApi({
     })
 })
 
-export const { useRegisterMutation, useVerifyRegisterOtpMutation } = authApi;
-
+export const { 
+    useRegisterMutation, 
+    useVerifyRegisterOtpMutation, 
+    useLoginMutation } = authApi;
+    
 export default authApi;
