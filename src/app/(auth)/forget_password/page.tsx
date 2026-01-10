@@ -5,6 +5,7 @@ import { useForgotPasswordMutation } from "@/store/feature/authApi/authApi";
 import loginImage from "../../../../public/verify_email.svg";
 import Image from "next/image";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type Inputs = {
     email: string
@@ -12,7 +13,7 @@ type Inputs = {
 
 const Page: React.FC = () => {
 
-
+    const router = useRouter()
     const [forgotPassword, { isLoading }] = useForgotPasswordMutation()
 
     const {
@@ -26,13 +27,14 @@ const Page: React.FC = () => {
         try {
             const result = await forgotPassword(data).unwrap();
             if (result?.success) {
-                toast.success(result?.message || "Email sent successfully", {
+                toast.success(result?.message || "Email sent           successfully", {
                     style: {
                         backgroundColor: "#d1fae5",
                         color: "#16a34a",
                         borderLeft: "6px solid #16a34a",
                     },
                 });
+                router.push("/forgetpass_verify_otp")
             }
         } catch (error: any) {
             toast.error(error?.data?.message || "User doesn't exist", {

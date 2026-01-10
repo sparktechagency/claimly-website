@@ -40,7 +40,15 @@ const authApi = createApi({
                 body: userData
             }),
             invalidatesTags: ["Auth"]
-        })
+        }),
+        verifyForgetpasswordOtp: builder.mutation<TResponse<any>, any>({
+            query: (userData: any) => ({
+                url: "/auth/verify-otp",
+                method: "POST",
+                body: userData
+            }),
+            invalidatesTags: ["Auth"]
+        }),
     })
 })
 
@@ -48,7 +56,8 @@ export const {
     useRegisterMutation,
     useVerifyRegisterOtpMutation,
     useLoginMutation,
-    useForgotPasswordMutation
+    useForgotPasswordMutation,
+    useVerifyForgetpasswordOtpMutation
 } = authApi;
 
 export default authApi;
