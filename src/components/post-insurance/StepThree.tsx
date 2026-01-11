@@ -2,6 +2,8 @@
 import Image from "next/image";
 import React from "react";
 import insurer from "../../../public/insurer.svg";
+import { useFormContext } from "react-hook-form";
+import { InsuranceFormInputs } from "@/app/post_insurance/page";
 
 interface StepProps {
     onNext: () => void;
@@ -9,6 +11,7 @@ interface StepProps {
 }
 
 const StepThree: React.FC<StepProps> = ({ onNext, onPrev }) => {
+    const { setValue } = useFormContext<InsuranceFormInputs>();
     const [insurerSaid, setInsurerSaid] = React.useState("");
     const [concernedAbout, setConcernedAbout] = React.useState("");
     const [complaintMade, setComplaintMade] = React.useState("");
@@ -28,14 +31,20 @@ const StepThree: React.FC<StepProps> = ({ onNext, onPrev }) => {
             return;
         }
 
+        // Sync to React Hook Form
+        setValue("insurerResponse", insurerSaid);
+        setValue("userConcern", concernedAbout);
+        setValue("complaintMade", complaintMade);
+        setValue("complaintStatus", complaintStatus);
+
         setErrors({});
         onNext();
     };
 
     const radioOptions = [
-        { id: "no", label: "No" },
-        { id: "insurer", label: "Yes - with insurer" },
-        { id: "afca", label: "Yes - with AFCA" }
+        { id: "NO", label: "No" },
+        { id: "YES_WITH_INSURER", label: "Yes - with insurer" },
+        { id: "YES_WITH_AFCA", label: "Yes - with AFCA" }
     ];
 
     return (
@@ -83,7 +92,7 @@ const StepThree: React.FC<StepProps> = ({ onNext, onPrev }) => {
                         setConcernedAbout(e.target.value);
                         setErrors((prev) => ({ ...prev, concernedAbout: "" }));
                     }}
-                    placeholder="payout seems too low, unsure if the insurer is right, whether it’s worth disputing, or what evidence matters most."
+                    placeholder="payout seems too low, unsure if the insurer is right, whether it's worth disputing, or what evidence matters most."
                     className={`w-full px-4 py-3 border rounded-[12px] outline-none text-[#64748B] bg-white min-h-[120px] transition-all 
                         ${errors.concernedAbout ? "border-red-500" : "border-[#DBEAFE]"}`}
                 />

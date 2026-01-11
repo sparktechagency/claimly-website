@@ -3,13 +3,15 @@ import React from "react";
 import insurer from "../../../public/insurer.svg";
 import Image from "next/image";
 import CustomDropDown from "./CustomDropDown";
-
+import { useFormContext } from "react-hook-form";
+import { InsuranceFormInputs } from "@/app/post_insurance/page";
 
 interface StepProps {
     onNext: () => void;
 }
 
 const StepOne: React.FC<StepProps> = ({ onNext }) => {
+    const { setValue } = useFormContext<InsuranceFormInputs>();
     const [insurerName, setInsurerName] = React.useState("");
     const [customInsurerName, setCustomInsurerName] = React.useState("");
     const [policyType, setPolicyType] = React.useState("");
@@ -17,9 +19,9 @@ const StepOne: React.FC<StepProps> = ({ onNext }) => {
     const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
 
     const insurers = ["NRMA", "AAMI", "Allianz", "Budget Direct", "Suncorp", "Other"];
-    const policies = ["Comprehensive", "Comprehensive Basic", "Third Party Fire & Theft", "Third Party Property Damage", "Other / Not sure"];
+    const policies = ["COMPREHENSIVE", "COMPREHENSIVE_BASIC", "THIRD_PARTY_FIRE_AND_THEFT", "THIRD_PARTY_PROPERTY_DAMAGE", "OTHER"];
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const newErrors: { [key: string]: string } = {};
         if (!isNotInsured) {
@@ -31,6 +33,15 @@ const StepOne: React.FC<StepProps> = ({ onNext }) => {
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
+        }
+
+        // Sync to React Hook Form
+        if (isNotInsured) {
+            setValue("insurerName", "Not insured");
+            setValue("policyType", "N/A");
+        } else {
+            setValue("insurerName", insurerName === "Other" ? customInsurerName : insurerName);
+            setValue("policyType", policyType);
         }
 
         setErrors({});

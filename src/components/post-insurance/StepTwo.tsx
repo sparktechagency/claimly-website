@@ -2,6 +2,8 @@
 import React from "react";
 import insurer from "../../../public/insurer.svg";
 import Image from "next/image";
+import { useFormContext } from "react-hook-form";
+import { InsuranceFormInputs } from "@/app/post_insurance/page";
 
 const datePickerStyle = `
   input[type="date"]::-webkit-calendar-picker-indicator {
@@ -25,6 +27,7 @@ interface StepProps {
 }
 
 const StepTwo: React.FC<StepProps> = ({ onNext, onPrev }) => {
+    const { setValue } = useFormContext<InsuranceFormInputs>();
     const [incidentDate, setIncidentDate] = React.useState("");
     const [reportDate, setReportDate] = React.useState("");
     const [description, setDescription] = React.useState("");
@@ -42,6 +45,11 @@ const StepTwo: React.FC<StepProps> = ({ onNext, onPrev }) => {
             setErrors(newErrors);
             return;
         }
+
+        // Sync to React Hook Form
+        setValue("incidentDate", incidentDate);
+        setValue("firstNotifiedDate", reportDate);
+        setValue("incidentDescription", description);
 
         setErrors({});
         onNext();

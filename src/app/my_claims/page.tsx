@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import ClaimsHeader from "@/components/claims/ClaimsHeader";
 import ClaimsTabs from "@/components/claims/ClaimsTabs";
 import ClaimCard, { ClaimStatus } from "@/components/claims/ClaimCard";
+import { useGetMyInsurerQuery } from "@/store/feature/insurerapi/insurerapi";
 
 // Dummy Data matching Figma screenshots
 const DUMMY_CLAIMS = [
@@ -95,11 +96,12 @@ const DUMMY_CLAIMS = [
 
 const MyClaimsPage = () => {
   const [activeTab, setActiveTab] = useState<ClaimStatus>("under-review");
+  const { data: myensurer, isLoading } = useGetMyInsurerQuery(activeTab)
+  console.log("getMyInsurer", myensurer)
 
   const filteredClaims = DUMMY_CLAIMS.filter(claim => claim.status === activeTab);
 
-    // const UserAvatar = ({ size = 36, fontSize = "text-sm" }: { size?: number, fontSize?: string }) => {
-    // const firstLetter = DUMMY_CLAIMS.map((usr, i)=>name.charAt(0).toUpperCase())}
+
 
   return (
     <div className="min-h-screen ">

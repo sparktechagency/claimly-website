@@ -2,38 +2,53 @@
 import Image from "next/image";
 import React from "react";
 import insurer from "../../../public/insurer.svg";
-import SubmitModal from "./SubmitModal";
+import { useFormContext } from "react-hook-form";
+import { InsuranceFormInputs } from "@/app/post_insurance/page";
 
 interface StepProps {
     onPrev: () => void;
+    onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+    isLoading: boolean;
 }
 
-const StepFour: React.FC<StepProps> = ({ onPrev }) => {
+const StepFour: React.FC<StepProps> = ({ onPrev, onSubmit, isLoading }) => {
+    const { register, watch, setValue } = useFormContext<InsuranceFormInputs>();
     const [consentChecked, setConsentChecked] = React.useState(false);
-    const [files, setFiles] = React.useState<string[]>([]);
+    const [files, setFiles] = React.useState<File[]>([]);
     const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!consentChecked) {
             setErrors({ consent: "You must agree to the terms to proceed." });
             return;
         }
         setErrors({});
-        setIsModalOpen(true);
+
+        try {
+            // Create a FileList-like object from files array
+            const dataTransfer = new DataTransfer();
+            files.forEach(file => dataTransfer.items.add(file));
+            setValue("supporting_Documents", dataTransfer.files);
+
+            // Call the parent's submit handler
+            await onSubmit(e as any);
+        } catch (error) {
+            // Error is already handled in parent component
+            console.error("Submission failed:", error);
+        }
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            const newFiles = Array.from(e.target.files).map(file => file.name);
+            const newFiles = Array.from(e.target.files);
             setFiles(prev => [...prev, ...newFiles]);
         }
     };
 
     const removeFile = (fileName: string) => {
-        setFiles(files.filter(f => f !== fileName));
+        setFiles(files.filter(f => f.name !== fileName));
     };
 
     const isImage = (fileName: string) => {
@@ -65,6 +80,7 @@ const StepFour: React.FC<StepProps> = ({ onPrev }) => {
                     ref={fileInputRef}
                     className="hidden"
                     multiple
+                    accept=".pdf,.jpg,.jpeg,.png,.gif,.doc,.docx"
                     onChange={handleFileChange}
                 />
                 <div
@@ -87,7 +103,7 @@ const StepFour: React.FC<StepProps> = ({ onPrev }) => {
                         <div key={index} className="flex justify-between items-center bg-[#EFF6FF] border border-[#2563EB] rounded-[12px] px-4 py-3">
                             <div className="flex items-center gap-3">
                                 <div className="bg-white p-2 rounded-lg border border-[#DBEAFE] flex flex-col items-center min-w-[40px]">
-                                    {isImage(file) ? (
+                                    {isImage(file.name) ? (
                                         <>
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M4 16L8.58579 11.4142C9.36683 10.6332 10.6332 10.6332 11.4142 11.4142L16 16M14 14L15.5858 12.4142C16.3668 11.6332 17.6332 11.6332 18.4142 12.4142L20 14M14 8H14.01M6 20H18C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4H6C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20Z" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -103,9 +119,9 @@ const StepFour: React.FC<StepProps> = ({ onPrev }) => {
                                         </>
                                     )}
                                 </div>
-                                <span className="text-[#64748B] text-sm">{file}</span>
+                                <span className="text-[#64748B] text-sm">{file.name}</span>
                             </div>
-                            <button type="button" onClick={() => removeFile(file)} className="text-[#64748B] hover:text-red-500 transition-colors">
+                            <button type="button" onClick={() => removeFile(file.name)} className="text-[#64748B] hover:text-red-500 transition-colors">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M19 7L18.1327 19.1425C18.0579 20.1891 17.187 21 16.1378 21H7.86224C6.81296 21 5.94208 20.1891 5.86732 19.1425L5 7M10 11V17M14 11V17M15 7V4C15 3.44772 14.5523 3 14 3H10C9.44772 3 9 3.44772 9 4V7M4 7H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
@@ -152,14 +168,16 @@ const StepFour: React.FC<StepProps> = ({ onPrev }) => {
                     type="button"
                     onClick={onPrev}
                     className="px-8 py-2.5 border border-[#2563EB] text-[#2563EB] font-medium rounded-[12px] hover:bg-blue-50 transition-colors"
+                    disabled={isLoading}
                 >
                     Previous
                 </button>
                 <button
                     type="submit"
-                    className="px-10 py-2.5 bg-[#2563EB] text-white font-medium rounded-[12px] hover:bg-blue-700 transition-colors"
+                    disabled={isLoading}
+                    className="px-10 py-2.5 bg-[#2563EB] text-white font-medium rounded-[12px] hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    Submit
+                    {isLoading ? "Submitting..." : "Submit"}
                 </button>
             </div>
 
@@ -175,11 +193,6 @@ const StepFour: React.FC<StepProps> = ({ onPrev }) => {
                     Please redact or black out sensitive personal information where possible (e.g. licence numbers, Addresses, bank details, etc). Only include information relevant to your claim.
                 </p>
             </div>
-
-            <SubmitModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-            />
         </form>
     );
 };
