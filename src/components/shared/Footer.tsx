@@ -174,7 +174,7 @@ const Footer: React.FC = () => {
             </ul>
 
             <p className="text-white text-[16px] text-xs mt-6">
-              © 2025 Claimly. All rights reserved.
+              © 2026 Claimly. All rights reserved.
             </p>
           </div>
         </div>

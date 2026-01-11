@@ -224,7 +224,7 @@ const PrivacyPolicy = () => {
           </div>
 
           <p className="pt-4 text-xs text-slate-500">
-            © 2025 Claimly. All rights reserved. Your trust matters. We are
+            © 2026 Claimly. All rights reserved. Your trust matters. We are
             committed to keeping your data secure and your claims process safe.
           </p>
         </div>

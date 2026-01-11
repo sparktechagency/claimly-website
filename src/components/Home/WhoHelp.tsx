@@ -112,11 +112,12 @@ const WhoHelp = () => {
               </p>
 
               <p className="default-list-text font-medium">
-                Your report may include:
+                What we help with:
               </p>
 
               <ul className="space-y-3">
                 {[
+                  'Liability in dispute',
                   "Disputes about repairs versus write-off decisions",
                   "Disagreements about market value or settlement amounts",
                   "Questions around pre-existing damage or non-disclosure",
