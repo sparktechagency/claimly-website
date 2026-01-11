@@ -24,12 +24,6 @@ const insurerApi = createApi({
                     status
                 }
             }),
-            providesTags: (result, error, arg) => [
-                {
-                    type: "Insurer",
-                    id: arg,
-                },
-            ],
         }),
     }),
 });
