@@ -1,8 +1,37 @@
+"use client";
 import PageHero from "@/components/shared/PageHero";
 import arrwoleft from "../../../../public/arrowleft.svg";
 import Image from "next/image";
 import Understand from "@/components/Home/Understand";
+import { useParams } from "next/navigation";
+import { useGetClaimlyGuideByIdQuery } from "@/store/feature/claimlyGuides/claimlyGuidesApi";
+
 const ClaimlyDetails = () => {
+  const { id } = useParams();
+  const { data, isLoading, isError } = useGetClaimlyGuideByIdQuery(id as string);
+
+  const guide = data?.data;
+
+  console.log("guide", guide)
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-xl font-semibold">Loading...</p>
+      </div>
+    );
+  }
+
+  if (isError || !guide) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-xl font-semibold text-red-500">
+          Error loading guide details.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       {" "}
@@ -20,17 +49,18 @@ const ClaimlyDetails = () => {
             </p>
           </div>
 
-           <div className="flex flex-col gap-3.5">
-               <h2 className="text-2xl font-bold md:text-3xl leading-[1.5]">non-disclosure” means in insurance claims</h2>
-                <p className="default-text leading-normal!">
-                Non-disclosure refers to situations where an insurer believes relevant information was not disclosed when the policy was taken out or renewed. This can include prior damage, previous claims, or other details considered material to underwriting the policy. Insurers assess whether the information was required to be disclosed and how it may have affected the policy terms or premium. This guide explains how non-disclosure is generally assessed, why it is a common point of dispute, and how insurers typically approach these cases.
-              </p>
-           </div>
+          <div className="flex flex-col gap-3.5">
+            <h2 className="text-2xl font-bold md:text-3xl leading-[1.5]">
+              {guide?.title}
+            </h2>
+            <p className="default-text leading-normal!">
+              {guide?.details}
+            </p>
+          </div>
 
-
-            <div>
-                 <Understand/>
-            </div>
+          <div>
+            <Understand />
+          </div>
         </div>
       </div>
     </div>

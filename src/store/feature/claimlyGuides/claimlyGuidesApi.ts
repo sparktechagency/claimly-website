@@ -16,13 +16,22 @@ const claimlyGuidesApi = createApi({
             }),
         }),
 
+        getClaimlyGuideById: builder.query<TResponse<any>, string>({
+            query: (id) => ({
+                url: `/claimlyGuide/${id}`,
+                method: 'GET',
+            }),
+            providesTags: (result, error, id) => [{ type: 'ClaimlyGuides', id }],
+        }),
+
     }),
 });
 
 
 
 export const {
-    useGetClaimlyGuidesQuery
+    useGetClaimlyGuidesQuery,
+    useGetClaimlyGuideByIdQuery
 } = claimlyGuidesApi;
 
 export default claimlyGuidesApi;

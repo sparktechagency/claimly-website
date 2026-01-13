@@ -7,33 +7,6 @@ import { MdArrowOutward } from "react-icons/md";
 import { useGetClaimlyGuidesQuery } from "@/store/feature/claimlyGuides/claimlyGuidesApi";
 
 
-// const guidesData = [
-//   {
-//     id: 1,
-//     title: "How insurers assess motor accident claims",
-//     link: "claimly_guides/id",
-//   },
-//   {
-//     id: 2,
-//     title: "Repair vs write-off: how insurers usually decide",
-//     link: "claimly_guides/id",
-//   },
-//   {
-//     id: 3,
-//     title: "What Non-Disclosure is in insurance Claims",
-//     link: "claimly_guides/id",
-//   },
-//   {
-//     id: 4,
-//     title: "How the insurance complaints process works in Australia",
-//     link: "claimly_guides/id",
-//   },
-//   {
-//     id: 5,
-//     title: "How insurers assess motor accident claims",
-//     link: "claimly_guides/id",
-//   },
-// ];
 
 const ClaimlyGuides = () => {
 
