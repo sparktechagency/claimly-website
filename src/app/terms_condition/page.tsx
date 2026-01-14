@@ -2,13 +2,14 @@
 import Image from "next/image";
 import images from "../../../public/hero 2-Photoroom.svg";
 import { useGetTermsConditionsQuery } from "@/store/feature/web/webApi";
+import { div } from "framer-motion/client";
 
 const TermsCondition = () => {
 
 
 
   const { data, isLoading, error } = useGetTermsConditionsQuery()
-  console.log("ddata", data?.data?.description)
+
 
 
   return (
@@ -51,12 +52,14 @@ const TermsCondition = () => {
       </div>
 
       <div className="container mx-auto px-6 lg:px-8 py-10 lg:py-28">
-        <div className=" text-slate-700 space-y-6 text-sm lg:text-base leading-relaxed">
-          <p>
-            {data?.data?.description}
-          </p>
-
-        </div>
+        
+        {isLoading? <div> loading.... </div> : <div
+          className="prose prose-slate max-w-none"
+          dangerouslySetInnerHTML={{
+            __html: data?.data?.description || "",
+          }}
+        />}
+        
       </div>
     </div>
   );

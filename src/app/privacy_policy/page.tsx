@@ -51,16 +51,20 @@ const PrivacyPolicy = () => {
       </div>
 
       <div className="container mx-auto px-6 lg:px-8 py-10 lg:py-28">
-        <div className=" text-slate-700 space-y-6 text-sm lg:text-base leading-relaxed">
-          <div className="space-y-1">
-            <h3 className="font-semibold text-slate-900">🔒 Privacy Policy</h3>
-            <p>{data?.data?.description}</p>
+  <div className="text-slate-700 space-y-6 text-sm lg:text-base leading-relaxed">
+    <div className="space-y-3">
+      {/* <h3 className="font-semibold text-slate-900">🔒 Privacy Policy</h3> */}
 
-          </div>
+      <div
+        className="prose prose-slate max-w-none"
+        dangerouslySetInnerHTML={{
+          __html: data?.data?.description || "",
+        }}
+      />
+    </div>
+  </div>
+</div>
 
-
-        </div>
-      </div>
     </div>
   );
 };
