@@ -1,5 +1,7 @@
 
 export const getBaseUrl = () => {
+  // return 'https://6dxv0gtk-4444.inc1.devtunnels.ms';
+  // return '10.10.20.3:4444';
   return 'https://6dxv0gtk-4444.inc1.devtunnels.ms';
   // return 'https://claimly-insurance-server.vercel.app';
   // return 'https://7bn5s1dw-4444.inc1.devtunnels.ms';

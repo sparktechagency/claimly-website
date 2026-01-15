@@ -8,8 +8,8 @@ const insurerApi = createApi({
     baseQuery: baseQueryWithAuth,
     tagTypes: ["Insurer"],
     endpoints: (builder) => ({
-        postInsurer: builder.mutation<TResponse<any>, any>({
-            query: (insurerData: any) => ({
+        postInsurer: builder.mutation<TResponse<any>, FormData | any>({
+            query: (insurerData) => ({
                 url: '/insurer/create-insurer',
                 method: 'POST',
                 body: insurerData,
