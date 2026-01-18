@@ -11,11 +11,14 @@ interface StepProps {
 }
 
 const StepOne: React.FC<StepProps> = ({ onNext }) => {
-    const { setValue } = useFormContext<InsuranceFormInputs>();
-    const [insurerName, setInsurerName] = React.useState("");
+    const { setValue, getValues } = useFormContext<InsuranceFormInputs>();
+
+    // Initialize from React Hook Form values (for when user navigates back)
+    const formValues = getValues();
+    const [insurerName, setInsurerName] = React.useState(formValues.insurerName || "");
     const [customInsurerName, setCustomInsurerName] = React.useState("");
-    const [policyType, setPolicyType] = React.useState("");
-    const [isNotInsured, setIsNotInsured] = React.useState(false);
+    const [policyType, setPolicyType] = React.useState(formValues.policyType || "");
+    const [isNotInsured, setIsNotInsured] = React.useState(formValues.notInsured || false);
     const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
 
     const insurers = ["NRMA", "AAMI", "Allianz", "Budget Direct", "Suncorp", "Other"];

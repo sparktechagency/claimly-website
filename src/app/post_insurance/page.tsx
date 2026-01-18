@@ -51,10 +51,10 @@ const PostInsurance = () => {
     try {
       const formData = new FormData();
 
-      // ✅ BOOLEAN FIX
+      //  BOOLEAN FIX
       formData.append("notInsured", String(data.notInsured));
 
-      // ✅ DATE SAFE CONVERSION
+      //  DATE SAFE CONVERSION
       if (data.incidentDate) {
         formData.append(
           "incidentDate",
@@ -75,13 +75,13 @@ const PostInsurance = () => {
       formData.append("complaintMade", data.complaintMade);
       formData.append("complaintStatus", data.complaintStatus);
 
-      // ✅ INSURER DETAILS (ONLY IF INSURED)
+      //  INSURER DETAILS (ONLY IF INSURED)
       if (!data.notInsured) {
         formData.append("insurerName", data.insurerName);
         formData.append("policyType", data.policyType);
       }
 
-      // ✅ FILE HANDLING
+      //  FILE HANDLING
       if (data.supporting_Documents?.length) {
         Array.from(data.supporting_Documents).forEach((file) => {
           formData.append("supporting_Documents", file);

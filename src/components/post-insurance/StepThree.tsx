@@ -11,11 +11,14 @@ interface StepProps {
 }
 
 const StepThree: React.FC<StepProps> = ({ onNext, onPrev }) => {
-    const { setValue } = useFormContext<InsuranceFormInputs>();
-    const [insurerSaid, setInsurerSaid] = React.useState("");
-    const [concernedAbout, setConcernedAbout] = React.useState("");
-    const [complaintMade, setComplaintMade] = React.useState("");
-    const [complaintStatus, setComplaintStatus] = React.useState("");
+    const { setValue, getValues } = useFormContext<InsuranceFormInputs>();
+
+    // Initialize from React Hook Form values (for when user navigates back)
+    const formValues = getValues();
+    const [insurerSaid, setInsurerSaid] = React.useState(formValues.insurerResponse || "");
+    const [concernedAbout, setConcernedAbout] = React.useState(formValues.userConcern || "");
+    const [complaintMade, setComplaintMade] = React.useState(formValues.complaintMade || "");
+    const [complaintStatus, setComplaintStatus] = React.useState(formValues.complaintStatus || "");
     const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
 
     const handleSubmit = (e: React.FormEvent) => {

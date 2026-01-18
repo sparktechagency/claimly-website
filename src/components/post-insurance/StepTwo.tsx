@@ -27,10 +27,13 @@ interface StepProps {
 }
 
 const StepTwo: React.FC<StepProps> = ({ onNext, onPrev }) => {
-    const { setValue } = useFormContext<InsuranceFormInputs>();
-    const [incidentDate, setIncidentDate] = React.useState("");
-    const [reportDate, setReportDate] = React.useState("");
-    const [description, setDescription] = React.useState("");
+    const { setValue, getValues } = useFormContext<InsuranceFormInputs>();
+
+    // Initialize from React Hook Form values (for when user navigates back)
+    const formValues = getValues();
+    const [incidentDate, setIncidentDate] = React.useState(formValues.incidentDate || "");
+    const [reportDate, setReportDate] = React.useState(formValues.firstNotifiedDate || "");
+    const [description, setDescription] = React.useState(formValues.incidentDescription || "");
     const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
 
     const handleSubmit = (e: React.FormEvent) => {
