@@ -10,7 +10,7 @@ import { FaSpinner } from "react-icons/fa";
 
 const MyClaimsPage = () => {
   const [activeTab, setActiveTab] = useState<ClaimStatus>("UNDER_REVIEW");
-  const { data, isLoading, error } = useGetMyInsurerQuery(activeTab);
+  const { data, isLoading, error, isFetching } = useGetMyInsurerQuery(activeTab);
   const myInsurer = data?.data || [];
 
   console.log("myInsurer", myInsurer)
@@ -23,12 +23,12 @@ const MyClaimsPage = () => {
         <div className="">
           <ClaimsTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-          {isLoading ? (
-             <div className="flex items-center justify-center min-h-[40vh]">
-          <p className="animate-spin text-[#2563EB]">
-            <FaSpinner className="text-3xl" />
-          </p>
-        </div>
+          {isLoading || isFetching ? (
+            <div className="flex items-center justify-center min-h-[40vh]">
+              <p className="animate-spin text-[#2563EB]">
+                <FaSpinner className="text-3xl" />
+              </p>
+            </div>
           ) : myInsurer.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {myInsurer.map((claim: any) => {
