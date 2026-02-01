@@ -7,6 +7,8 @@ import ClaimCard, { ClaimStatus } from "@/components/claims/ClaimCard";
 import { useGetMyInsurerQuery } from "@/store/feature/insurerapi/insurerapi";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import { FaSpinner } from "react-icons/fa";
+import noclaimImage from "../../../public/Group.png"
+import Image from "next/image";
 
 const MyClaimsPage = () => {
   const [activeTab, setActiveTab] = useState<ClaimStatus>("UNDER_REVIEW");
@@ -58,17 +60,12 @@ const MyClaimsPage = () => {
               })}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
+            <div className="flex flex-col items-center justify-center py-20 text-center border border-[#DBEAFE] rounded-lg">
               <div className="w-16 h-16 bg-[#EFF6FF] rounded-full flex items-center justify-center mb-4">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 12H15M9 16H15M17 21H7C5.89543 21 5 20.1046 5 19V5C5 3.89543 5.89543 3 7 3H12.5858C12.8511 3 13.1055 3.10536 13.293 3.29289L18.7071 8.70711C18.8946 8.89464 19 9.14893 19 9.41421V19C19 20.1046 18.1046 21 17 21Z" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <Image src={noclaimImage} alt="No Claim" />
               </div>
-              <h3 className="text-lg font-bold text-[#1E293B] mb-1">No claims found</h3>
-              <p className="text-[#64748B] text-sm max-w-xs">
-                There are currently no claims with this status.
-                Click "New Claim Analysis" to start a new report.
-              </p>
+              <h3 className="text-lg font-bold text-[#1E293B] mb-1">No {activeTab} Claims found</h3>
+             
             </div>
           )}
         </div>

@@ -37,7 +37,7 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
 
         setDownloading(true);
         try {
-            // constructing full URL similar to how it's handled in my_claims/page.tsx for avatars
+            
             const domain = 'https://8r91dfjh-4444.inc1.devtunnels.ms';
             const fullUrl = reportUrl.startsWith('http')
                 ? reportUrl
@@ -51,7 +51,6 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
             const link = document.createElement('a');
             link.href = url;
 
-            // Extract filename from URL or use a default one
             const fileName = reportUrl.split(/[\\/]/).pop() || 'report.pdf';
             link.setAttribute('download', fileName);
 
@@ -163,8 +162,8 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
             `}
             >
                 <div className="flex flex-col">
-                    <span className="text-black text-[13px] font-bold uppercase mb-0.5">
-                        Submitted on
+                    <span className="text-black text-[13px] font-bold  mb-0.5">
+                        Submitted On
                     </span>
                     <span className="text-[#64748B] text-xs font-semibold">{date}</span>
                 </div>
@@ -193,8 +192,8 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
 
             {/* Failed Warning Box */}
             {isFailed && failureNote && (
-                <div className="mt-4 p-4 bg-[#FEF2F2] border-l-4 border-red-500 rounded-r-[10px] flex gap-3 items-start shadow-sm transition-all hover:shadow-md">
-                    <div className="mt-0.5 bg-[#EF4444]/10 p-1.5 rounded-full">
+                <div className="mt-4 p-4 bg-[#FFF1F2] flex gap-3 items-start shadow-sm transition-all hover:shadow-md border border-[#E11D48] rounded-lg">
+                    <div className="">
                         <Image
                             src={deleteinfo}
                             alt="error"
@@ -204,8 +203,8 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
                         />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <span className="text-[#DC2626] text-[10px] font-bold uppercase tracking-wider">Note</span>
-                        <p className="text-[#991B1B] text-[12px] leading-relaxed font-medium">
+                        
+                        <p className="text-[#E11D48] text-[12px] leading-relaxed font-medium">
                             {failureNote}
                         </p>
                     </div>
