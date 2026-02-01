@@ -7,7 +7,7 @@ import ClaimCard, { ClaimStatus } from "@/components/claims/ClaimCard";
 import { useGetMyInsurerQuery } from "@/store/feature/insurerapi/insurerapi";
 import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import { FaSpinner } from "react-icons/fa";
-import noclaimImage from "../../../public/Group.png"
+import noclaimImage from "../../../public/Group (1).png"
 import Image from "next/image";
 
 const MyClaimsPage = () => {
@@ -64,7 +64,7 @@ const MyClaimsPage = () => {
               <div className="w-16 h-16 bg-[#EFF6FF] rounded-full flex items-center justify-center mb-4">
                 <Image src={noclaimImage} alt="No Claim" />
               </div>
-              <h3 className="text-lg font-bold text-[#1E293B] mb-1">No {activeTab} Claims found</h3>
+              <h3 className="text-lg font-bold text-[#1E293B] mb-1">No <span className="capitalize">{activeTab.replace(/_/g, ' ').toLowerCase()}</span> Claims found</h3>
              
             </div>
           )}
