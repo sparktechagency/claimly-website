@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { Download } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 import clock from "../../../public/clock.svg";
 import calander from "../../../public/calendar.svg";
 import block from "../../../public/block.svg";
@@ -15,8 +15,9 @@ interface ClaimCardProps {
     title: string;
     insurer: string;
     date: string;
-    failedReason?: string;
+    failureNote?: string;
     avatarUrl: string | null;
+    reportUrl?: string | null;
 }
 
 const ClaimCard: React.FC<ClaimCardProps> = ({
@@ -25,9 +26,47 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
     title,
     insurer,
     date,
-    failedReason,
+    failureNote,
     avatarUrl,
+    reportUrl,
 }) => {
+    const [downloading, setDownloading] = React.useState(false);
+
+    const handleDownload = async () => {
+        if (!reportUrl) return;
+
+        setDownloading(true);
+        try {
+            // constructing full URL similar to how it's handled in my_claims/page.tsx for avatars
+            const domain = 'https://8r91dfjh-4444.inc1.devtunnels.ms';
+            const fullUrl = reportUrl.startsWith('http')
+                ? reportUrl
+                : `${domain}/${reportUrl.replace(/\\/g, '/')}`;
+
+            const response = await fetch(fullUrl);
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+
+            // Extract filename from URL or use a default one
+            const fileName = reportUrl.split(/[\\/]/).pop() || 'report.pdf';
+            link.setAttribute('download', fileName);
+
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode?.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("Download failed:", error);
+            alert("Failed to download file. Please check if the file exists on the server.");
+        } finally {
+            setDownloading(false);
+        }
+    };
+
     const isUnderReview = status === "UNDER_REVIEW";
     const isReportReady = status === "REPORT_READY";
     const isFailed = status === "FAILED";
@@ -132,33 +171,44 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
 
                 {!isFailed && (
                     <button
-                        disabled={isUnderReview}
+                        onClick={handleDownload}
+                        disabled={isUnderReview || downloading || (isReportReady && !reportUrl)}
                         className={`flex items-center gap-2 px-4 py-2 rounded-[8px] text-xs font-bold transition-all
-                            ${isReportReady
+                            ${isReportReady && reportUrl
                                 ? "bg-[#2563EB] text-white hover:bg-[#1d4ed8] shadow-sm shadow-blue-100"
                                 : "bg-[#F1F5F9] text-[#CBD5E1] cursor-not-allowed"
                             }
+                            ${downloading ? "opacity-70" : ""}
                         `}
                     >
-                        <Download size={14} />
-                        Download
+                        {downloading ? (
+                            <Loader2 size={14} className="animate-spin" />
+                        ) : (
+                            <Download size={14} />
+                        )}
+                        {downloading ? "Downloading..." : "Download"}
                     </button>
                 )}
             </div>
 
             {/* Failed Warning Box */}
-            {isFailed && failedReason && (
-                <div className="mt-4 p-3 bg-[#FEF2F2] border border-[#FEE2E2] rounded-[10px] flex gap-2.5 items-center">
-                    <Image
-                        src={deleteinfo}
-                        alt="clock"
-                        width={100}
-                        height={100}
-                        className="w-3"
-                    />
-                    <p className="text-[#DC2626] text-[11px] leading-relaxed">
-                        {failedReason}
-                    </p>
+            {isFailed && failureNote && (
+                <div className="mt-4 p-4 bg-[#FEF2F2] border-l-4 border-red-500 rounded-r-[10px] flex gap-3 items-start shadow-sm transition-all hover:shadow-md">
+                    <div className="mt-0.5 bg-[#EF4444]/10 p-1.5 rounded-full">
+                        <Image
+                            src={deleteinfo}
+                            alt="error"
+                            width={16}
+                            height={16}
+                            className="w-4 h-4"
+                        />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                        <span className="text-[#DC2626] text-[10px] font-bold uppercase tracking-wider">Note</span>
+                        <p className="text-[#991B1B] text-[12px] leading-relaxed font-medium">
+                            {failureNote}
+                        </p>
+                    </div>
                 </div>
             )}
         </div>

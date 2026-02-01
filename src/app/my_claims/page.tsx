@@ -16,7 +16,7 @@ const MyClaimsPage = () => {
   console.log("myInsurer", myInsurer)
 
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-screen">
       <div className="container mx-auto px-6 lg:px-24 my-12 lg:my-28">
         <ClaimsHeader />
 
@@ -51,7 +51,8 @@ const MyClaimsPage = () => {
                       year: "numeric"
                     }) : ""}
                     avatarUrl={avatarUrl}
-                    failedReason={claim?.failedReason}
+                    reportUrl={claim?.report_Document?.[0]}
+                    failureNote={claim?.failureNote}
                   />
                 );
               })}
