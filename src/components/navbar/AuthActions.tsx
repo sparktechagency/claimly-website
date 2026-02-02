@@ -247,6 +247,8 @@ const AuthActions: React.FC<AuthActionsProps> = ({
   const { data: profileData } = useGetMyProfileQuery(undefined, { skip: !isLogin });
   const userData = profileData?.data;
 
+  const profileImage = userData?.normalUser?.[0]?.profile_image
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -289,7 +291,7 @@ const AuthActions: React.FC<AuthActionsProps> = ({
       >
         {profileImg ? (
           <Image
-            src={`${getBaseUrl()}/${profileImg.replace(/\\/g, "/")}`}
+            src={profileImage}
             fill
             alt="profile"
             className="object-cover"

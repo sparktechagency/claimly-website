@@ -25,6 +25,8 @@ const ProfilePage = () => {
 
   const firstLetter = userName?.trim().charAt(0).toUpperCase();
 
+  const profileImage = data?.data?.normalUser?.[0]?.profile_image
+
   return (
     <div className="container mx-auto px-6 lg:px-8 py-10 lg:py-28">
       {/* header */}
@@ -60,10 +62,7 @@ const ProfilePage = () => {
           <div className="relative w-24 h-24 border border-[#DBEAFE] rounded-full flex items-center justify-center overflow-hidden bg-[#2563EB]">
             {userData?.normalUser?.[0]?.profile_image ? (
               <Image
-                src={`${getBaseUrl()}/${userData.normalUser[0].profile_image.replace(
-                  /\\/g,
-                  "/"
-                )}`}
+                src={profileImage}
                 alt={userData?.fullName || "Profile"}
                 fill
                 className="object-cover"

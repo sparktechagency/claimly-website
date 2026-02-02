@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "claimly-insurance-server.vercel.app",
       },
+      {
+        protocol: "https",
+        hostname: "d1828hp9binr8g.cloudfront.net",
+      },
     ],
   },
 };

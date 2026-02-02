@@ -18,6 +18,8 @@ const UpdateProfilePage = () => {
   const { data: profileData } = useGetMyProfileQuery();
   const [updateProfile, { isLoading: isSaving }] = useUpdateProfileMutation();
 
+  
+
   const [profileImage, setProfileImage] = useState<string>("/man.png");
   const [imageFile, setImageFile] = useState<File | null>(null);
 
@@ -38,7 +40,7 @@ const UpdateProfilePage = () => {
         phone: user.phone || "",
       });
       if (user.normalUser?.[0]?.profile_image) {
-        setProfileImage(`${getBaseUrl()}/${user.normalUser[0].profile_image.replace(/\\/g, "/")}`);
+        setProfileImage(user.normalUser?.[0]?.profile_image);
       }
     }
   }, [profileData]);
