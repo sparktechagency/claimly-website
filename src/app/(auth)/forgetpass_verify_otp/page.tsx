@@ -5,13 +5,20 @@ import React, { useState, useRef, useEffect } from "react";
 import verifyImage from "../../../../public/verify_email.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useVerifyForgetpasswordOtpMutation } from "@/store/feature/authApi/authApi";
+import { useRecentForgotPassOtpMutation, useVerifyForgetpasswordOtpMutation } from "@/store/feature/authApi/authApi";
 import { toast } from "sonner";
 
 const VerifyOtp: React.FC = () => {
+    const [email, setEmail] = useState<string>("");
+
+    useEffect(() => {
+        const savedEmail = localStorage.getItem("email") || "";
+        setEmail(savedEmail);
+    }, []);
     const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
     const [verifyRegisterOtpMutation, { isLoading }] = useVerifyForgetpasswordOtpMutation();
+    const [recentForgotPassOtpMutation] = useRecentForgotPassOtpMutation()
     const router = useRouter();
     // Set focus on the first input on mount
     useEffect(() => {
@@ -109,6 +116,43 @@ const VerifyOtp: React.FC = () => {
         }
     };
 
+    const handleForgotPassOtpSend = async () => {
+        const userData = {
+            email: localStorage.getItem("email"),
+        };
+        console.log(userData)
+        try {
+            const result = await recentForgotPassOtpMutation(userData).unwrap();
+            console.log("token data", result)
+            if (result?.success) {
+                // Store the access token for automatic login
+                if (result?.data?.accessToken) {
+                    localStorage.setItem("accessToken", result.data.accessToken);
+                }
+
+                toast.success(result?.message || "OTP send successfully!", {
+                    style: {
+                        backgroundColor: "#dcfce7",
+                        color: "#166534",
+                        borderLeft: "6px solid #166534",
+                    },
+                });
+
+
+                // router.push("/forgetNewPassSet");
+            }
+        } catch (err: any) {
+            const errorMessage = err?.data?.message || "OTP send failed. Please try again.";
+            toast.error(errorMessage, {
+                style: {
+                    backgroundColor: "#fee2e2",
+                    color: "#991b1b",
+                    borderLeft: "6px solid #991b1b",
+                },
+            });
+        }
+    }
+
     return (
         <div className="max-w-4xl w-full mx-auto">
             <div className="flex items-center gap-8">
@@ -163,6 +207,7 @@ const VerifyOtp: React.FC = () => {
                                 <p className="text-sm text-slate-600">
                                     Didn't receive the code?
                                     <button
+                                        onClick={handleForgotPassOtpSend}
                                         type="button"
                                         className="text-[#4E9AF1] font-medium hover:underline ml-1"
                                     >

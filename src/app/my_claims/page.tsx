@@ -37,7 +37,7 @@ const MyClaimsPage = () => {
                 // Get profile_image from normalUserId
                 const profileImg = claim?.normalUserId?.profile_image;
                 const avatarUrl = profileImg
-                  ? `${getBaseUrl()}/${profileImg.replace(/\\/g, "/")}`
+                  ? profileImg
                   : null;
 
                 return (

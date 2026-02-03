@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
-import React, { use, useState } from "react";
+import React, { useEffect, useState } from "react";
 import loginImage from "../../../../public/login.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { useLoginMutation } from "@/store/feature/authApi/authApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { getCookie, removeCookie, setCookie } from "@/lib/utils/cookies";
 
 type Inputs = {
   email: string
@@ -23,15 +24,40 @@ const Page: React.FC = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    setValue,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Inputs>();
+
+  // Pre-fill form on mount if rememberMe was previously checked (using cookies)
+  useEffect(() => {
+    const savedEmail = getCookie("rememberedEmail");
+    const savedPassword = getCookie("rememberedPassword");
+    const savedRememberMe = getCookie("rememberMe") === "true";
+
+    if (savedRememberMe && savedEmail) {
+      setValue("email", savedEmail);
+      if (savedPassword) setValue("password", savedPassword);
+      setValue("rememberMe", true);
+    }
+  }, [setValue]);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const response = await login(data).unwrap();
       if (response?.success) {
         localStorage.setItem("accessToken", response?.data?.accessToken);
         localStorage.setItem("email", data.email);
+
+        // Handle Remember Me logic (using cookies)
+        if (data.rememberMe) {
+          setCookie("rememberedEmail", data.email, 30); // Save for 30 days
+          setCookie("rememberedPassword", data.password, 30);
+          setCookie("rememberMe", "true", 30);
+        } else {
+          removeCookie("rememberedEmail");
+          removeCookie("rememberedPassword");
+          removeCookie("rememberMe");
+        }
 
         const redirect =
           new URLSearchParams(window.location.search).get("redirect") || "/";
