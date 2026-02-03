@@ -6,6 +6,7 @@ import insurerApi from './feature/insurerapi/insurerapi';
 import myProfileApi from './feature/myProfileApi/myProfileApi';
 import claimlyGuidesApi from './feature/claimlyGuides/claimlyGuidesApi';
 import webApi from './feature/web/webApi';
+import metaApi from './feature/meta/metaApi';
 
 
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
     [myProfileApi.reducerPath]: myProfileApi.reducer,
     [claimlyGuidesApi.reducerPath]: claimlyGuidesApi.reducer,
     [webApi.reducerPath]: webApi.reducer,
+    [metaApi.reducerPath]: metaApi.reducer,
 
   },
   middleware: (getDefaultMiddleware) =>
@@ -23,7 +25,8 @@ export const store = configureStore({
       insurerApi.middleware,
       myProfileApi.middleware,
       claimlyGuidesApi.middleware,
-      webApi.middleware
+      webApi.middleware,
+      metaApi.middleware
     )
 })
 
