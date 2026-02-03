@@ -5,6 +5,8 @@ import { useGetTermsConditionsQuery } from "@/store/feature/web/webApi";
 import { div } from "framer-motion/client";
 import { FaSpinner } from "react-icons/fa";
 
+import noTermsImage from "../../../public/Group (1).png";
+
 const TermsCondition = () => {
 
 
@@ -54,20 +56,36 @@ const TermsCondition = () => {
 
       <div className="container mx-auto px-6 lg:px-8 py-10 lg:py-28">
 
-        {isLoading ? (<div className="flex items-center justify-center min-h-[40vh]">
-          <p className="animate-spin text-[#2563EB]">
-            <FaSpinner className="text-3xl" />
-          </p>
-        </div>)
-          :
+        {isLoading ? (
+          <div className="flex items-center justify-center min-h-[40vh]">
+            <p className="animate-spin text-[#2563EB]">
+              <FaSpinner className="text-3xl" />
+            </p>
+          </div>
+        ) : data?.data?.description ? (
           <div
             className="prose prose-slate max-w-none"
             dangerouslySetInnerHTML={{
-              __html: data?.data?.description || "",
+              __html: data?.data?.description,
             }}
           />
-
-        }
+        ) : (
+          <div className="flex flex-col items-center justify-center py-20 text-center border border-[#DBEAFE] rounded-xl bg-[#F8FAFC]">
+            <div className="w-20 h-20 bg-[#EFF6FF] rounded-full flex items-center justify-center mb-6 shadow-sm">
+              <Image
+                src={noTermsImage}
+                alt="No Terms"
+                width={40}
+                height={40}
+                className="opacity-80"
+              />
+            </div>
+            <h3 className="text-xl font-bold text-[#1E293B] mb-2">No Terms & Conditions Found</h3>
+            <p className="text-[#64748B] text-sm max-w-sm">
+              The terms and conditions content is currently unavailable. Please check back later.
+            </p>
+          </div>
+        )}
 
       </div>
     </div>

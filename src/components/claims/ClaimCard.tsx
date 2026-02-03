@@ -32,38 +32,29 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
 }) => {
     const [downloading, setDownloading] = React.useState(false);
 
-    const handleDownload = async () => {
+    const handleDownload = () => {
         if (!reportUrl) return;
 
-        setDownloading(true);
-        try {
-            
-            const domain = 'https://8r91dfjh-4444.inc1.devtunnels.ms';
-            const fullUrl = reportUrl.startsWith('http')
-                ? reportUrl
-                : `${domain}/${reportUrl.replace(/\\/g, '/')}`;
+        const domain = 'https://8r91dfjh-4444.inc1.devtunnels.ms';
+        const fullUrl = reportUrl.startsWith('http')
+            ? reportUrl
+            : `${domain}/${reportUrl.replace(/\\/g, '/')}`;
 
-            const response = await fetch(fullUrl);
-            if (!response.ok) throw new Error('Network response was not ok');
+        // Create a temporary link and trigger a click
+        // Using this method instead of fetch to avoid CORS issues with Cloudfront/S3
+        const link = document.createElement('a');
+        link.href = fullUrl;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
 
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
+        // The 'download' attribute might be ignored for cross-origin URLs without
+        // specific headers, but it remains the best practice for suggesting a download.
+        const fileName = reportUrl.split(/[\\/]/).pop() || 'report.pdf';
+        link.setAttribute('download', fileName);
 
-            const fileName = reportUrl.split(/[\\/]/).pop() || 'report.pdf';
-            link.setAttribute('download', fileName);
-
-            document.body.appendChild(link);
-            link.click();
-            link.parentNode?.removeChild(link);
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error("Download failed:", error);
-            alert("Failed to download file. Please check if the file exists on the server.");
-        } finally {
-            setDownloading(false);
-        }
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     const isUnderReview = status === "UNDER_REVIEW";
@@ -203,7 +194,7 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
                         />
                     </div>
                     <div className="flex flex-col gap-1">
-                        
+
                         <p className="text-[#E11D48] text-[12px] leading-relaxed font-medium">
                             {failureNote}
                         </p>

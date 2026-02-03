@@ -31,6 +31,14 @@ const webApi = createApi({
             }),
             providesTags: ["WebApi"]
         }),
+          contactUs: builder.mutation({
+            query: (data) => ({
+                url: '/manage-Web/add-contact-us',
+                method: 'POST',
+                body: data,
+            }),
+            invalidatesTags: ['WebApi']
+        }),
 
     }),
 });
@@ -40,7 +48,8 @@ const webApi = createApi({
 export const {
     useGetTermsConditionsQuery,
     useGetPrivacyPolicyQuery,
-    useGetFaqQuery
+    useGetFaqQuery,
+    useContactUsMutation
 } = webApi;
 
 export default webApi;
