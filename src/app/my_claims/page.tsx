@@ -5,14 +5,15 @@ import ClaimsHeader from "@/components/claims/ClaimsHeader";
 import ClaimsTabs from "@/components/claims/ClaimsTabs";
 import ClaimCard, { ClaimStatus } from "@/components/claims/ClaimCard";
 import { useGetMyInsurerQuery } from "@/store/feature/insurerapi/insurerapi";
-import { getBaseUrl } from "@/lib/utils/getBaseUrl";
 import { FaSpinner } from "react-icons/fa";
 import noclaimImage from "../../../public/Group (1).png"
 import Image from "next/image";
 
 const MyClaimsPage = () => {
   const [activeTab, setActiveTab] = useState<ClaimStatus>("UNDER_REVIEW");
-  const { data, isLoading, error, isFetching } = useGetMyInsurerQuery(activeTab);
+  const { data, isLoading, error, isFetching } = useGetMyInsurerQuery(activeTab, {
+    refetchOnMountOrArgChange: true,
+  });
   const myInsurer = data?.data || [];
 
   console.log("myInsurer", myInsurer)
@@ -65,7 +66,7 @@ const MyClaimsPage = () => {
                 <Image src={noclaimImage} alt="No Claim" />
               </div>
               <h3 className="text-lg font-bold text-[#1E293B] mb-1">No <span className="capitalize">{activeTab.replace(/_/g, ' ').toLowerCase()}</span> Claims found</h3>
-             
+
             </div>
           )}
         </div>
