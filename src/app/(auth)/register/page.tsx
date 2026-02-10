@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import loginImage from "../../../../public/register.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 import { Eye, EyeOff } from "lucide-react";
 import { useRegisterMutation } from "@/store/feature/authApi/authApi";
 import { useRouter } from "next/navigation";
@@ -28,7 +28,6 @@ const Page: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [passwordFocused, setPasswordFocused] = useState<boolean>(false);
-  const [phoneValue, setPhoneValue] = useState<string | undefined>("");
 
 
 
@@ -36,6 +35,7 @@ const Page: React.FC = () => {
     register,
     handleSubmit,
     watch,
+    control,
     setError,
     clearErrors,
     formState: { errors },
@@ -56,14 +56,6 @@ const Page: React.FC = () => {
   ];
 
   const isAllCriteriaMet = validationCriteria.every(c => c.met);
-
-  const handlePhoneChange = (value?: string) => {
-    setPhoneValue(value);
-
-    if (value) {
-      clearErrors("phone");
-    }
-  };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -166,17 +158,34 @@ const Page: React.FC = () => {
                 <label className="text-[#1E293B]/70 text-[15px] font-medium mb-2 block">
                   Phone Number
                 </label>
-                <PhoneInput
-                  {...register("phone", { required: true })}
-                  defaultCountry="AU"
-                  placeholder="Enter phone number"
-                  value={phoneValue}
-                  onChange={handlePhoneChange}
-                  className="w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
+                <Controller
+                  name="phone"
+                  control={control}
+                  rules={{
+                    required: "Phone number is required",
+                    validate: (value) => {
+                      if (!value) return "Phone number is required";
+                      const isValid = isValidPhoneNumber(value);
+                      const isAustralian = value.startsWith("+61");
+                      if (!isValid || !isAustralian) {
+                        return "Only Australian phone numbers (+61) are allowed";
+                      }
+                      return true;
+                    }
+                  }}
+                  render={({ field }) => (
+                    <PhoneInput
+                      {...field}
+                      defaultCountry="AU"
+                      countries={["AU"]}
+                      placeholder="Enter phone number"
+                      className={`w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border ${errors.phone ? 'border-red-500' : 'border-[#DBEAFE]'} focus:border-blue-600 outline-none transition-all`}
+                    />
+                  )}
                 />
                 <div className="h-4">
                   {errors.phone && (
-                    <p className="text-red-500 text-[11px] mt-1 font-medium">{"Phone number is required"}</p>
+                    <p className="text-red-500 text-[11px] mt-1 font-medium">{errors.phone.message}</p>
                   )}
                 </div>
               </div>
