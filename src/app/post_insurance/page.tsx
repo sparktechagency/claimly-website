@@ -9,6 +9,7 @@ import StepThree from "@/components/post-insurance/StepThree";
 import StepFour from "@/components/post-insurance/StepFour";
 import { usePostInsurerMutation } from "@/store/feature/insurerapi/insurerapi";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
+import SubmitModal from "@/components/post-insurance/SubmitModal";
 
 export type InsuranceFormInputs = {
   insurerName: string;
@@ -27,6 +28,7 @@ export type InsuranceFormInputs = {
 const PostInsurance = () => {
   const [postInsurer, { isLoading }] = usePostInsurerMutation();
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const methods = useForm<InsuranceFormInputs>({
     defaultValues: {
@@ -90,9 +92,11 @@ const PostInsurance = () => {
 
       const res = await postInsurer(formData).unwrap();
 
-      toast.success(res?.message || "Insurance submitted successfully");
-      methods.reset();
-      setCurrentPage(1);
+      if (res?.success) {
+        setIsModalOpen(true);
+        methods.reset();
+        setCurrentPage(1);
+      }
     } catch (err: any) {
       console.error("Submit error:", err);
 
@@ -152,6 +156,11 @@ const PostInsurance = () => {
 
         {/* Content */}
         <div className="flex-1 w-full">{renderItem(currentPage)}</div>
+
+        <SubmitModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </div>
     </FormProvider>
   );
