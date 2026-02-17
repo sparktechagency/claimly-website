@@ -31,7 +31,7 @@ const Page: React.FC = () => {
 
             if (result?.success) {
                 localStorage.setItem("email", email);
-                toast.success(result?.message || "Email sent           successfully", {
+                toast.success(result?.message || "Email sent successfully", {
                     style: {
                         backgroundColor: "#d1fae5",
                         color: "#16a34a",
