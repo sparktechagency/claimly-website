@@ -100,9 +100,12 @@ const PostInsurance = () => {
     } catch (err: any) {
       console.error("Submit error:", err);
 
-      toast.error(
-        err?.data?.message || err?.message || "Failed to submit insurance form"
-      );
+      const errorMessage = err?.data?.message || err?.message || "";
+      if (errorMessage.includes("Unexpected field")) {
+        toast.error("Max 4 files. Email Support@Claimly.com for more.");
+      } else {
+        toast.error(errorMessage || "Failed to submit insurance form");
+      }
     }
   };
 

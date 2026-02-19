@@ -61,7 +61,8 @@ const StepOne: React.FC<StepProps> = ({ onNext }) => {
                 </div>
                 <div className="flex flex-col gap-2">
                     <p className="text-2xl font-bold text-[#1E293B]">Insurer & Policy Details</p>
-                    <p className="text-[14px] text-[#64748B]">This helps us interpret your documents correctly and benchmark your case against similar cases.</p>
+                    <p className="text-[14px] text-[#64748B]">Note: If you need to submit more than four files, kindly send them to Support@Claimly.com via email.
+</p>
                 </div>
             </div>
 

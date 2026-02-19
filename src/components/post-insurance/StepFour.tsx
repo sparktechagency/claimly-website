@@ -67,6 +67,11 @@ const StepFour: React.FC<StepProps> = ({ onPrev, onSubmit, isLoading }) => {
                     <p className="text-[14px] text-[#64748B]">
                         Upload supporting documents and acknowledge how Claimly works.
                     </p>
+                    <p className="text-[14px] text-[#64748B]">
+                        Note: If you need to submit more than four files, kindly send them to Support@Claimly.com via email.
+
+
+                    </p>
                 </div>
             </div>
 
