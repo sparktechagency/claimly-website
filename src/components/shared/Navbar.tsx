@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import weblogo from "../../../public/brand_logo.svg";
+import Logo from "./Logo";
 import AuthActions from "../navbar/AuthActions";
 
 export default function Navbar() {
@@ -33,7 +33,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/">
-            <Image src={weblogo} alt="Claimly Logo" width={120} height={40} />
+            <Logo className="w-32 md:w-42" />
           </Link>
 
           {/* Desktop Menu */}
@@ -89,7 +89,7 @@ export default function Navbar() {
             <div className="p-6 flex flex-col h-full">
               {/* Header */}
               <div className="flex justify-between items-center mb-6">
-                <Image src={weblogo} alt="Logo" width={100} height={32} />
+                <Logo className="w-32"/>
                 <button onClick={() => setIsMenuOpen(false)}>✕</button>
               </div>
 

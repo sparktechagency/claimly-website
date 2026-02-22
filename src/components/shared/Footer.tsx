@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 import FooterBg from "../../../public/rightcircle.svg";
-import taskalleyLogo from "../../../public/footerlogo.svg";
+import Logo from "./Logo";
 import facebook from "../../../public/facebook.svg";
 import instagram from "../../../public/instagram.svg";
 import twitter from "../../../public/twitter.svg";
@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
           {/* First column */}
           <div className="flex flex-col gap-3 md:gap-5 max-w-96">
             <Link href="/" aria-label="Home">
-              <Image src={taskalleyLogo} alt="Taskalley Logo" priority />
+              <Logo textColor="white" className="w-32 md:w-52" />
             </Link>
             <div>
               <p className="text-white text-[16px]">
