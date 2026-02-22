@@ -29,7 +29,7 @@ const Understand = () => {
 
         {/* right section */}
         <div className="flex-1 text-center">
-       <Link href="/my_claims">
+       <Link href="/post_insurance">
              <Button
             rightIcon={
               <Image

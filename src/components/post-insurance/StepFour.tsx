@@ -68,7 +68,7 @@ const StepFour: React.FC<StepProps> = ({ onPrev, onSubmit, isLoading }) => {
                         Upload supporting documents and acknowledge how Claimly works.
                     </p>
                     <p className="text-[14px] text-[#64748B]">
-                        Note: If you need to submit more than four files, kindly send them to Support@Claimly.com via email.
+                        Note: If submitting more than four files, email the extras to Support@Claimly.au with your name in the subject.
 
 
                     </p>

@@ -121,8 +121,8 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Fourth column - Social */}
-          <div className="flex flex-col gap-3.5">
-            <h4 className="text-lg mb-4 text-white font-semibold">Follow Us</h4>
+          <div className="flex flex-col justify-end gap-3.5">
+            {/* <h4 className="text-lg mb-4 text-white font-semibold">Follow Us</h4>
             <ul className="flex items-center gap-6">
               <li>
                 <a
@@ -171,7 +171,7 @@ const Footer: React.FC = () => {
                   <Image src={instagram} alt="Behance" />
                 </a>
               </li>
-            </ul>
+            </ul> */}
 
             <p className="text-white text-[16px] text-xs mt-6">
               © 2026 Claimly. All rights reserved.

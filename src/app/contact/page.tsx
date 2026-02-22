@@ -184,7 +184,7 @@ const Contact = () => {
             <div>
               <p className="text-xl"> contact Email </p>
               <p className="default-list-text leading-normal! text-center">
-                Support@Claimly.com
+                Support@claimly.au
               </p>
             </div>
           </div>
