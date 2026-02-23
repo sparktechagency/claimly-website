@@ -19,6 +19,66 @@ const LogoSection = () => {
               Everyday Australians are Using{" "}
               <span className="text-brand"> Claimly</span> with insurers like
             </h2>
+
+            {/* right section */}
+            <div className="w-full flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2 gap-5 justify-center items-center md:hidden">
+              <div className="py-5.5 md:py-6 px-6 lg:px-14 lg:py-8.5 xl:py-10 6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+                <Image
+                  src={logosixth}
+                  height={100}
+                  width={100}
+                  alt="AAMI"
+
+                  className="object-cover"
+                />
+              </div>
+              <div className="py-2 px-6 lg:px-14 lg:py-6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+                <Image
+                  src={logofirst}
+                  height={100}
+                  width={100}
+                  alt="AAMI"
+                  className="object-cover"
+                />
+              </div>
+              <div className="py-2 px-6 lg:px-14 lg:py-6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center ">
+                <Image
+                  src={logosecond}
+                  height={100}
+                  width={100}
+                  alt="AAMI"
+                  className="object-cover"
+                />
+              </div>
+              <div className="py-2 px-6 lg:px-14 lg:py-6  bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+                <Image
+                  src={logothird}
+                  height={100}
+                  width={100}
+                  alt="AAMI"
+                  className="object-cover"
+                />
+              </div>
+              <div className="py-2 px-6 lg:px-14 lg:py-6  bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+                <Image
+                  src={logofourth}
+                  height={100}
+                  width={100}
+                  alt="AAMI"
+                  className="object-cover"
+                />
+              </div>
+              <div className="py-2 px-6 lg:px-14 lg:py-6  bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+                <Image
+                  src={logofifth}
+                  height={100}
+                  width={100}
+                  alt="AAMI"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
           </div>
           <div className="flex flex-col gap-4">
             <p className="default-list-text">
@@ -45,17 +105,18 @@ const LogoSection = () => {
           </div>
         </div>
         {/* right section */}
-        <div className="w-full flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2 gap-5 justify-center items-center">
-          <div className="py-5.5 md:py-6 px-6 lg:px-14 lg:py-8.5 xl:py-10 6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+        <div className="w-full flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2 gap-5 justify-center items-center hidden md:grid">
+
+          <div className="py-5.5 md:py-6 px-6 lg:px-14 lg:py-8.5 xl:py-10 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
             <Image
               src={logosixth}
               height={100}
               width={100}
               alt="AAMI"
-
               className="object-cover"
             />
           </div>
+
           <div className="py-2 px-6 lg:px-14 lg:py-6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
             <Image
               src={logofirst}
@@ -65,7 +126,8 @@ const LogoSection = () => {
               className="object-cover"
             />
           </div>
-          <div className="py-2 px-6 lg:px-14 lg:py-6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center ">
+
+          <div className="py-2 px-6 lg:px-14 lg:py-6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
             <Image
               src={logosecond}
               height={100}
@@ -74,7 +136,8 @@ const LogoSection = () => {
               className="object-cover"
             />
           </div>
-          <div className="py-2 px-6 lg:px-14 lg:py-6  bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+
+          <div className="py-2 px-6 lg:px-14 lg:py-6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
             <Image
               src={logothird}
               height={100}
@@ -83,7 +146,8 @@ const LogoSection = () => {
               className="object-cover"
             />
           </div>
-          <div className="py-2 px-6 lg:px-14 lg:py-6  bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+
+          <div className="py-2 px-6 lg:px-14 lg:py-6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
             <Image
               src={logofourth}
               height={100}
@@ -92,7 +156,8 @@ const LogoSection = () => {
               className="object-cover"
             />
           </div>
-          <div className="py-2 px-6 lg:px-14 lg:py-6  bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
+
+          <div className="py-2 px-6 lg:px-14 lg:py-6 bg-white border border-[#2563EB] rounded-lg flex items-center justify-center">
             <Image
               src={logofifth}
               height={100}
@@ -101,6 +166,7 @@ const LogoSection = () => {
               className="object-cover"
             />
           </div>
+
         </div>
       </div>
     </div>
