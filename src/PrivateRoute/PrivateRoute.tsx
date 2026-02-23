@@ -33,8 +33,9 @@ const PrivateRoute = ({ children }: props) => {
 
     useEffect(() => {
         const token = localStorage.getItem("accessToken")
+        const isPublicRoute = publiRoutes.includes(pathname) || pathname.startsWith("/claimly_guides/")
 
-        if (publiRoutes.includes(pathname)) {
+        if (isPublicRoute) {
             setAuthorized(true)
             return
         }
@@ -47,7 +48,7 @@ const PrivateRoute = ({ children }: props) => {
         }
     }, [pathname, router])
 
-    const isPublic = publiRoutes.includes(pathname)
+    const isPublic = publiRoutes.includes(pathname) || pathname.startsWith("/claimly_guides/")
     if (!authorized && !isPublic) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-white">
