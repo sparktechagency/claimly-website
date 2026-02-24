@@ -37,7 +37,7 @@ const Hero = () => {
             </div>
 
             <div>
-              <Link href='/my_claims'>
+              <Link href='/post_insurance'>
                 <Button variant="primary" size="lg" className="font-medium">
                   Analyse My Claim
                 </Button>
