@@ -25,9 +25,7 @@ const Footer: React.FC = () => {
                 claim. Upload your documents and receive a plain-English report
                 created by an insurance specialist.
               </p>
-              <p className="text-white text-[14px] mt-4">
-                General Information only - not legal or financial advice.
-              </p>
+             
             </div>
 
             {/* <a
@@ -79,8 +77,8 @@ const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 md:space-y-2 text-[16px]">
               <li>
-                <Link href="/" className="footer-link text-white text-[16px]">
-                  Home
+                <Link href="/faq" className="footer-link text-white text-[16px]">
+                  FAQ
                 </Link>
               </li>
               <li>
@@ -97,10 +95,14 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="footer-link text-white text-[16px]">
-                  FAQ
+                <Link
+                  href="/claimly_guides"
+                  className="footer-link text-white text-[16px]"
+                >
+                  Claimly Guides
                 </Link>
               </li>
+
               <li>
                 <Link
                   href="/privacy_policy"
@@ -114,7 +116,7 @@ const Footer: React.FC = () => {
                   href="/terms_condition"
                   className="footer-link text-white text-[16px]"
                 >
-                  Terms of condition
+                  Terms & Conditions
                 </Link>
               </li>
             </ul>

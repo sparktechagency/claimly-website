@@ -19,12 +19,12 @@ const Understand = () => {
             situation, you can submit your documents to Claimly for a
             structured, plain-English report.
           </p>
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-[#22C55E] rounded-full"></div>
             <p className="text-[14px] text-[#64748B] italic font-semibold">
               Motor insurance claims only during early access.
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* right section */}

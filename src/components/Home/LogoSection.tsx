@@ -1,11 +1,11 @@
 import React from "react";
 import { ListIcon } from "../icons-svg/customIcons";
 import Image from "next/image";
-import logofirst from "../../../public/image 21 (1).png";
-import logosecond from "../../../public/image 21 (2).png";
-import logothird from "../../../public/image 21 (3).png";
-import logofourth from "../../../public/image 21 (4).png";
-import logofifth from "../../../public/image 21 (5).png";
+import logofirst from "../../../public/aami.svg";
+import logosecond from "../../../public/allianz.svg";
+import logothird from "../../../public/youi.svg";
+import logofourth from "../../../public/budget.svg";
+import logofifth from "../../../public/qbe.svg";
 import logosixth from "../../../public/nrma-insurance-logo-brandlogos.net_lenuv62fu.svg";
 
 const LogoSection = () => {
@@ -82,19 +82,17 @@ const LogoSection = () => {
           </div>
           <div className="flex flex-col gap-4">
             <p className="default-list-text">
-              Claimly can be used with all Australian general insurers.
+              Claimly reviews claims across all Australian general insurers.
             </p>
-            <p className="default-list-text">What we help with:</p>
+            <p className="default-list-text">Our reports reference insurer obligations under the Insurance Contracts Act, the General Insurance Code of Practice, and ASIC complaint standards.</p>
           </div>
           <div>
             <ul className="mt-2.5 space-y-2.5">
               {[
-                "Liability in dispute",
-                "Benchmarking your situation against AFCA decisions",
-                "Key considerations under the Insurance Contracts Act 1984 (Cth)",
-                "Insurer obligations under the General Insurance Code of Practice (GICOP)",
-                "Complaint obligations under ASIC Regulatory Guide 271 (RG 271)",
-                "An example complaint letter",
+                "Review of insurer decisions and correspondence",
+                "Reference to relevant policy wording",
+                "Consideration of applicable regulatory standards",
+                "Structured complaint guidance (if appropriate)"
               ].map((item, index) => (
                 <li key={index} className="flex items-start gap-2.5">
                   <ListIcon className="list-icon shrink-0 mt-0.5" />

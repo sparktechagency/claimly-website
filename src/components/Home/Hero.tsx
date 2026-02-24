@@ -18,7 +18,7 @@ const Hero = () => {
               <div className="w-3 h-3 bg-[#22C55E] rounded-full "></div>
             </div>
             <p className="tracking-[1px] leading-[120%] text-black">
-              Free for a limited time
+             Start for free
             </p>
           </div>
           <div className="flex flex-col gap-6 md:gap-9 ">
@@ -37,7 +37,7 @@ const Hero = () => {
             </div>
 
             <div>
-              <Link href='/post_insurance'>
+              <Link href='/my_claims'>
                 <Button variant="primary" size="lg" className="font-medium">
                   Analyse My Claim
                 </Button>

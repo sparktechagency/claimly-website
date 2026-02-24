@@ -79,9 +79,9 @@ const About = () => {
 
       <div className="px-8 mt-10 mb-10 lg:mb-28">
          <div className="flex flex-col gap-5 items-center justify-center">
-              <h2 className="text-2xl lg:text-[40px] leading-[120%] font-semibold"><span className="text-brand"> Mission</span>  , Vision & Values 
+              <h2 className="text-2xl lg:text-[40px] leading-[120%] font-semibold"><span className="text-brand"> Mission</span>, Vision & Values 
               </h2>
-              <p className="default-list-text leading-normal! text-center">When claims stay organized, the process becomes faster and stress-free.</p>
+              <p className="default-list-text leading-normal! text-center">When claims stay organised, the process becomes faster and stress-free.</p>
             </div>
 
             {/* boxx */}
@@ -109,7 +109,7 @@ const About = () => {
                 className="w-10"
                 />
                 <p className="text-xl"> Our Vision </p>
-                 <p className="default-list-text leading-normal! text-center">To build an Advanced AI system that can reliably analyse insurance claims and explain complex claims in clear, plain language.</p>
+                 <p className="default-list-text leading-normal! text-center">To become Australia's most trusted independent claim review service - helping people understand their position before making important decisions.</p>
             </div>
             {/* first */}
             <div className="border border-[#FEF9C3] rounded-md px-6 lg:px-12 flex flex-col gap-2 mt-10 mb-10 items-center justify-center bg-white h-full">

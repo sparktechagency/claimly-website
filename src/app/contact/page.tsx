@@ -182,7 +182,7 @@ const Contact = () => {
               />
             </div>
             <div>
-              <p className="text-xl"> contact Email </p>
+              <p className="text-xl"> Contact Email </p>
               <p className="default-list-text leading-normal! text-center">
                 Support@claimly.au
               </p>

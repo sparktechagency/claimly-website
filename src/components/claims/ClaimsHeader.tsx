@@ -11,7 +11,7 @@ const ClaimsHeader = () => {
             <div className="flex items-center gap-2 text-[#64748B]">
                 <Link href="/" className="hover:text-[#2563EB] transition-colors flex items-center gap-1.5 text-sm font-medium">
                     <Image src={back} alt="clock" width={100} height={100}  className="w-3"/>
-                    My Claims
+                    Home
                 </Link>
             </div>
 

@@ -28,14 +28,14 @@ const benefitsData = [
     alt: "Claim Report",
     title: "Claim Report",
     description:
-      "We analyse your information, use our expertise and produces a plain-English PDF explaining how your claim may be viewed and what details typically matter most.",
+      "We analyse your information, use our expertise and provide you a plain-English PDF explaining how your claim may be viewed and what details typically matter most.",
   },
   {
     img: specialist,
     alt: "Specialist",
-    title: "by an insurance specialist",
+    title: "By an Insurance Specialist",
     description:
-      "While Claimly is in beta, every report is reviewed and signed off by an insurance specialist.",
+      "Every report is reviewed and signed off by an insurance specialist.",
   },
   {
     img: practical,

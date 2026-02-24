@@ -26,7 +26,7 @@ const WhoHelp = () => {
             {/* Right side content */}
             <div className="w-full lg:w-1/2 flex flex-col gap-5">
               <h2 className="text-2xl sm:text-3xl lg:text-[40px] leading-tight font-semibold">
-                Who we <span className="text-brand">help</span>
+                How we can help <span className="text-brand">you</span>
               </h2>
 
               <p className="default-list-text leading-relaxed">
@@ -38,17 +38,18 @@ const WhoHelp = () => {
               </p>
 
               <p className="default-list-text font-medium">
-                What we help with:
+                This may include, but is not limited to:
               </p>
 
               <ul className="space-y-3">
                 {[
-                  'Liability in dispute',
-                  "Disputes about repairs versus write-off decisions",
-                  "Disagreements about market value or settlement amounts",
-                  "Questions around pre-existing damage or non-disclosure",
-                  "Claims that feel stalled, delayed, or stuck in review",
-                  "Situations where you’re considering a complaint but aren’t sure it’s worth it",
+                  'Liability disputes',
+                  "Repair vs write-off decisions",
+                  "Market value or settlement disputes",
+                  "Identifying policy entitlements",
+                  "Non-disclosure or pre-existing damage issues",
+                  "Delayed or stalled claims",
+                  "Deciding whether to lodge a complaint"
                 ].map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <Image
