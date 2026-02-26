@@ -106,7 +106,7 @@ const TestimonialCarousel: React.FC = memo(() => {
         >
             <div className="flex flex-col items-center gap-4 text-center">
                 <h2 className="text-2xl lg:text-[40px] font-semibold">
-                    What Our <span className="text-brand">Users Say</span>
+                    Real <span className="text-brand">Feedback </span> From Real People
                 </h2>
                 {/* <p className="default-list-text max-w-2xl">
                     Most asked-about insurers (last 30 days). Based on Claimly submissions. Not affiliated with any insurer.
