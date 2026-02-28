@@ -10,23 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repository
-      - name: Checkout Repo
+      # 1️⃣ Checkout Repo
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Setup Node.js
+      # 2️⃣ Setup Node
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20.17"
 
-      # 3️⃣ Install dependencies & build
+      # 3️⃣ Install & Build
       - name: Install Dependencies & Build
         run: |
-          npm install --frozen-lockfile
+          npm install
           npm run build
 
-      # 4️⃣ Configure SSH
+      # 4️⃣ Setup SSH
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
@@ -36,7 +36,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      # 5️⃣ Deploy to EC2
+      # 5️⃣ Deploy
       - name: Deploy to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -45,32 +45,46 @@ jobs:
         run: |
           set -e
 
-          echo "🚀 Starting deployment..."
+          echo "🚀 Connecting to EC2..."
 
-          # Ensure PM2 installed
-          ssh $EC2_USER@$EC2_HOST "command -v pm2 || sudo npm install -g pm2"
+          # Ensure base directory exists & fix permission
+          ssh $EC2_USER@$EC2_HOST << 'EOF'
+            mkdir -p ~/applications/website
+            sudo chown -R $USER:$USER ~/applications
+          EOF
 
-          # Create project directory
-          ssh $EC2_USER@$EC2_HOST "mkdir -p ~/applications/website"
+          echo "📂 Syncing project files..."
 
-          # Sync build files
           rsync -avz --delete \
+            --rsync-path="mkdir -p ~/applications/website && rsync" \
             .next package.json public next.config.js \
             $EC2_USER@$EC2_HOST:~/applications/website/
 
-          # Write environment variables safely
-          ssh $EC2_USER@$EC2_HOST "echo \"$ENV_VARS_JSON\" | jq -r 'to_entries | .[] | \"\(.key)=\(.value)\"' > ~/applications/website/.env"
+          echo "🛠 Installing dependencies & starting app..."
 
-          # Install deps & run app using PM2 (SAFE BLOCK)
           ssh $EC2_USER@$EC2_HOST << 'EOF'
             set -e
 
             cd ~/applications/website
 
+            # Install jq if not exists
+            if ! command -v jq > /dev/null 2>&1; then
+              sudo apt update
+              sudo apt install -y jq
+            fi
+
+            # Install PM2 if not exists
+            if ! command -v pm2 > /dev/null 2>&1; then
+              sudo npm install -g pm2
+            fi
+
+            # Write environment variables safely
+            echo "$ENV_VARS_JSON" | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' > .env
+
             echo "📦 Installing production dependencies..."
             npm ci --omit=dev
 
-            echo "⚡ Starting or Reloading PM2 app..."
+            echo "⚡ Starting or Reloading App..."
 
             if pm2 describe website > /dev/null 2>&1; then
               pm2 reload website
@@ -81,4 +95,4 @@ jobs:
             pm2 save
           EOF
 
-          echo "✅ Deployment completed!"
+          echo "✅ Deployment Successful!"
