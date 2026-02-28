@@ -10,23 +10,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
+      # 1️⃣ Checkout repository
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      # 2. Setup Node.js
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20.17"
 
-      # 3. Install dependencies and build locally (on GitHub runner)
+      # 3️⃣ Install dependencies & build
       - name: Install Dependencies & Build
         run: |
           npm install --frozen-lockfile
           npm run build
 
-      # 4. Configure SSH
+      # 4️⃣ Configure SSH
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
@@ -36,7 +36,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      # 5. Deploy built files to EC2
+      # 5️⃣ Deploy to EC2
       - name: Deploy to EC2
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
@@ -45,21 +45,40 @@ jobs:
         run: |
           set -e
 
-          # Ensure PM2 is installed
+          echo "🚀 Starting deployment..."
+
+          # Ensure PM2 installed
           ssh $EC2_USER@$EC2_HOST "command -v pm2 || sudo npm install -g pm2"
 
           # Create project directory
           ssh $EC2_USER@$EC2_HOST "mkdir -p ~/applications/website"
 
-          # Sync built files only
+          # Sync build files
           rsync -avz --delete \
-            .next package.json public $EC2_USER@$EC2_HOST:~/applications/website/
+            .next package.json public next.config.js \
+            $EC2_USER@$EC2_HOST:~/applications/website/
 
-          # Write environment variables
-          ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' | jq -r 'to_entries | .[] | \"\(.key)=\(.value)\"' > ~/applications/website/.env"
+          # Write environment variables safely
+          ssh $EC2_USER@$EC2_HOST "echo \"$ENV_VARS_JSON\" | jq -r 'to_entries | .[] | \"\(.key)=\(.value)\"' > ~/applications/website/.env"
 
-          # Install only production dependencies and start app
-          ssh $EC2_USER@$EC2_HOST "
-            cd ~/applications/website &&
-            npm ci --omit=dev &&
-            pm2 describe website > /dev/null 2>&1 && pm2 reload website || pm2 start npm --name website -- start
+          # Install deps & run app using PM2 (SAFE BLOCK)
+          ssh $EC2_USER@$EC2_HOST << 'EOF'
+            set -e
+
+            cd ~/applications/website
+
+            echo "📦 Installing production dependencies..."
+            npm ci --omit=dev
+
+            echo "⚡ Starting or Reloading PM2 app..."
+
+            if pm2 describe website > /dev/null 2>&1; then
+              pm2 reload website
+            else
+              pm2 start npm --name website -- start
+            fi
+
+            pm2 save
+          EOF
+
+          echo "✅ Deployment completed!"
