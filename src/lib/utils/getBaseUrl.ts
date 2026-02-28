@@ -1,8 +1,8 @@
 
 export const getBaseUrl = () => {
-  // return 'https://6dxv0gtk-4444.inc1.devtunnels.ms';
+  return 'http://13.237.138.182:5000';
   // return 'https://8r91dfjh-4444.inc1.devtunnels.ms';
-  return 'https://8r91dfjh-4444.inc1.devtunnels.ms';
+  // return 'https://8r91dfjh-4444.inc1.devtunnels.ms';
   // return 'https://6dxv0gtk-4444.inc1.devtunnels.ms';
   // return 'https://claimly-insurance-server.vercel.app';
   // return 'https://7bn5s1dw-4444.inc1.devtunnels.ms';
