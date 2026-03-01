@@ -35,7 +35,7 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
     const handleDownload = () => {
         if (!reportUrl) return;
 
-        const domain = 'https://8r91dfjh-4444.inc1.devtunnels.ms';
+        const domain = 'http://13.237.138.182:5000';
         const fullUrl = reportUrl.startsWith('http')
             ? reportUrl
             : `${domain}/${reportUrl.replace(/\\/g, '/')}`;
