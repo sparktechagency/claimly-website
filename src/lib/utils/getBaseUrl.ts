@@ -1,6 +1,6 @@
 
 export const getBaseUrl = () => {
-  return 'http://13.237.138.182:5000';
+  return 'https://api.claimly.au';
   // return 'https://8r91dfjh-4444.inc1.devtunnels.ms';
   // return 'https://8r91dfjh-4444.inc1.devtunnels.ms';
   // return 'https://6dxv0gtk-4444.inc1.devtunnels.ms';

@@ -35,7 +35,7 @@ const ClaimCard: React.FC<ClaimCardProps> = ({
     const handleDownload = () => {
         if (!reportUrl) return;
 
-        const domain = 'http://13.237.138.182:5000';
+        const domain = 'https://api.claimly.au';
         const fullUrl = reportUrl.startsWith('http')
             ? reportUrl
             : `${domain}/${reportUrl.replace(/\\/g, '/')}`;
