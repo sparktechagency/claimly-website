@@ -1,6 +1,6 @@
 "use client";
 
-
+import React, { useState, useEffect } from "react";
 import { useGetInsurerChartDataQuery } from "@/store/feature/meta/metaApi";
 import {
   Bar,
@@ -74,6 +74,19 @@ const CustomTooltip = ({ active, payload }: RechartsTooltip) => {
 const RechartsComponent = () => {
   const { data: chartResponse, isLoading } = useGetInsurerChartDataQuery();
   const chartData = chartResponse?.data || [];
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div className="pt-10 md:pt-28 flex flex-col gap-4 md:gap-16 md:pb-28">
@@ -95,18 +108,22 @@ const RechartsComponent = () => {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={chartData}
-              margin={{ top: 30, right: 0, left: 0, bottom: 25 }}
+              margin={{ top: 30, right: 0, left: 0, bottom: isMobile ? 60 : 25 }}
               barCategoryGap="10%"
               barGap={0}
             >
               <XAxis
                 dataKey="insurer"
                 padding={{ left: 0, right: 0 }}
+                height={isMobile ? 80 : 30}
+                interval={0}
                 tick={{
-                  fontSize: 14,
+                  fontSize: isMobile ? 11 : 14,
                   fontWeight: 700,
                   fill: "#000",
                 }}
+                angle={isMobile ? -45 : 0}
+                textAnchor={isMobile ? "end" : "middle"}
                 axisLine={{ stroke: "#2563EB" }}
               />
 
