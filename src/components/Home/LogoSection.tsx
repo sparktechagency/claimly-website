@@ -16,7 +16,7 @@ const LogoSection = () => {
         <div className="flex flex-1 flex-col gap-4 md:gap-2.5">
           <div>
             <h2 className="text-2xl lg:text-[32px] xl:text-[40px] leading-[120%] font-semibold mb-3">
-              Everyday Australians are Using{" "}
+              Everyday Australians are using{" "}
               <span className="text-brand"> Claimly</span> with insurers like
             </h2>
 

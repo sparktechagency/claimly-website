@@ -97,7 +97,7 @@ const About = () => {
                 className="w-10"
                 />
                 <p className="text-xl"> Our Mission </p>
-                 <p className="default-list-text leading-normal! text-center">When claims stay organized, the process becomes faster and stress-free.</p>
+                 <p className="default-list-text leading-normal! text-center">Our mission is to help people understand their position in an insurance claim before making important decisions.</p>
             </div>
             {/* first */}
             <div className="border border-[#FEE2E2] rounded-md px-6 lg:px-12 flex flex-col gap-2 mt-10 mb-10 items-center justify-center bg-white h-full">

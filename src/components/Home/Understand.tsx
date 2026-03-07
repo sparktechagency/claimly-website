@@ -12,12 +12,10 @@ const Understand = () => {
         <div className="flex-1 flex flex-col gap-4">
           <h2 className="text-2xl lg:text-[40px] leading-[120%] font-semibold">
             Want to understand your own{" "}
-            <span className="text-brand"> Claimly</span>
+            <span className="text-brand"> Claimly?</span>
           </h2>
           <p className="default-list-text leading-normal!">
-            If you’d like help understanding how these principles apply to your
-            situation, you can submit your documents to Claimly for a
-            structured, plain-English report.
+            If you would like help, you can submit your documents to Claimly for a structured, plain-English report.
           </p>
           {/* <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 bg-[#22C55E] rounded-full"></div>
@@ -29,24 +27,24 @@ const Understand = () => {
 
         {/* right section */}
         <div className="flex-1 text-center">
-       <Link href="/post_insurance">
-             <Button
-            rightIcon={
-              <Image
-                src={right_icon}
-                alt="arrow icon"
-                width={16}
-                height={16}
-                className="transition-transform duration-200 group-hover:translate-x-1 w-4 h-4 ml-2.5"
-              />
-            }
-            variant="primary"
-            size="lg"
-            className="font-medium"
-          >
-            Analyse My Claim
-          </Button>
-       </Link>
+          <Link href="/post_insurance">
+            <Button
+              rightIcon={
+                <Image
+                  src={right_icon}
+                  alt="arrow icon"
+                  width={16}
+                  height={16}
+                  className="transition-transform duration-200 group-hover:translate-x-1 w-4 h-4 ml-2.5"
+                />
+              }
+              variant="primary"
+              size="lg"
+              className="font-medium"
+            >
+              Analyse My Claim
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

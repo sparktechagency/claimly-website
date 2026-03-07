@@ -88,7 +88,7 @@ const Page: React.FC = () => {
                                     {...register("email")}
                                     type="email"
                                     required
-                                    placeholder="est********************ail.com"
+                                    placeholder="example@yourmail.com"
                                     className="w-full text-sm text-[#1E293B] bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border border-[#DBEAFE] focus:border-blue-600 outline-none"
                                 />
                             </div>

@@ -144,7 +144,7 @@ const Page: React.FC = () => {
                   {...register("email", {
                     required: "Email is required"
                   })}
-                  placeholder="@esteban_schiller@gmail.com"
+                  placeholder="example@yourmail.com"
                   className={`w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border ${errors.email ? 'border-red-500' : 'border-[#DBEAFE]'} focus:border-blue-600 outline-none transition-all`}
                 />
                 <div className="h-4">
@@ -176,8 +176,10 @@ const Page: React.FC = () => {
                   render={({ field }) => (
                     <PhoneInput
                       {...field}
+                      international={false}
                       defaultCountry="AU"
-                      countries={["AU"]}
+                      country="AU"
+                      countrySelectProps={{ disabled: true }}
                       placeholder="Enter phone number"
                       className={`w-full text-sm text-[#1E293B]/70 bg-white focus:bg-transparent pl-4 pr-4 py-3.5 rounded-xl border ${errors.phone ? 'border-red-500' : 'border-[#DBEAFE]'} focus:border-blue-600 outline-none transition-all`}
                     />
