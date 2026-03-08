@@ -25,6 +25,12 @@
   --font-weight-bold: 700;
 }
 
+.ant-picker {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+}
+
 /* Tailwind Theme Extension */
 @theme {
   /* Font Family */
