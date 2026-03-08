@@ -176,6 +176,174 @@
 // export default StepTwo;
 
 
+// "use client";
+// import React from "react";
+// import insurer from "../../../public/insurer.svg";
+// import Image from "next/image";
+// import { useFormContext } from "react-hook-form";
+// import { InsuranceFormInputs } from "@/app/post_insurance/page";
+// import { DatePicker } from "antd";
+// import dayjs from "dayjs";
+
+// interface StepProps {
+//     onNext: () => void;
+//     onPrev: () => void;
+// }
+
+// const StepTwo: React.FC<StepProps> = ({ onNext, onPrev }) => {
+//     const { setValue, getValues } = useFormContext<InsuranceFormInputs>();
+
+//     const formValues = getValues();
+
+//     const [incidentDate, setIncidentDate] = React.useState(
+//         formValues.incidentDate || ""
+//     );
+//     const [reportDate, setReportDate] = React.useState(
+//         formValues.firstNotifiedDate || ""
+//     );
+//     const [description, setDescription] = React.useState(
+//         formValues.incidentDescription || ""
+//     );
+
+//     const [errors, setErrors] = React.useState<{ [key: string]: string }>({});
+
+//     const handleSubmit = (e: React.FormEvent) => {
+//         e.preventDefault();
+
+//         const newErrors: { [key: string]: string } = {};
+
+//         if (!incidentDate) newErrors.incidentDate = "Please select the incident date";
+//         if (!reportDate) newErrors.reportDate = "Please select when you told the insurer";
+//         if (!description.trim()) newErrors.description = "Please provide a description";
+
+//         if (Object.keys(newErrors).length > 0) {
+//             setErrors(newErrors);
+//             return;
+//         }
+
+//         setValue("incidentDate", incidentDate);
+//         setValue("firstNotifiedDate", reportDate);
+//         setValue("incidentDescription", description);
+
+//         setErrors({});
+//         onNext();
+//     };
+
+//     return (
+//         <form onSubmit={handleSubmit} className="space-y-4">
+
+//             <div className="flex gap-2">
+//                 <div className="w-5 mt-2">
+//                     <Image src={insurer} alt="insurer" width={100} height={100} />
+//                 </div>
+
+//                 <div className="flex flex-col gap-2">
+//                     <p className="text-2xl font-bold text-[#1E293B]">
+//                         Incident Details
+//                     </p>
+//                     <p className="text-[14px] text-[#64748B]">
+//                         When the incident happened and key facts.
+//                     </p>
+//                 </div>
+//             </div>
+
+//             {/* Incident Date */}
+//             <div>
+//                 <label className="block text-[#1E293B] text-sm font-medium mb-1">
+//                     When did the incident happen?
+//                 </label>
+
+//                 <DatePicker
+//                     value={incidentDate ? dayjs(incidentDate) : null}
+//                     onChange={(date) => {
+//                         const value = date ? date.format("YYYY-MM-DD") : "";
+//                         setIncidentDate(value);
+//                         setErrors((prev) => ({ ...prev, incidentDate: "" }));
+//                     }}
+//                     placeholder="The date the damage, incident or loss occurred"
+//                     getPopupContainer={(trigger) => trigger.parentElement!}
+//                     className={`w-full rounded-[12px] ${errors.incidentDate ? "border-red-500" : "border-[#DBEAFE]"
+//                         }`}
+//                     style={{ paddingTop: "10px", paddingBottom: "10px" }}
+//                 />
+
+//                 {errors.incidentDate && (
+//                     <p className="text-red-500 text-xs mt-1">{errors.incidentDate}</p>
+//                 )}
+//             </div>
+
+//             {/* Report Date */}
+//             <div>
+//                 <label className="block text-[#1E293B] text-sm font-medium mb-1">
+//                     When did you first tell the insurer?
+//                 </label>
+
+//                 <DatePicker
+//                     value={reportDate ? dayjs(reportDate) : null}
+//                     onChange={(date) => {
+//                         const value = date ? date.format("YYYY-MM-DD") : "";
+//                         setReportDate(value);
+//                         setErrors((prev) => ({ ...prev, reportDate: "" }));
+//                     }}
+//                     placeholder="This helps us understand whether delay is relevant"
+//                     getPopupContainer={(trigger) => trigger.parentElement!}
+//                     className={`w-full rounded-[12px] ${errors.incidentDate ? "border-red-500" : "border-[#DBEAFE]"
+//                         }`}
+//                     style={{ paddingTop: "10px", paddingBottom: "10px" }}
+//                 />
+
+//                 {errors.reportDate && (
+//                     <p className="text-red-500 text-xs mt-1">{errors.reportDate}</p>
+//                 )}
+//             </div>
+
+//             {/* Description */}
+//             <div>
+//                 <label className="block text-[#1E293B] text-sm font-medium mb-1">
+//                     Describe what happened
+//                 </label>
+
+//                 <textarea
+//                     value={description}
+//                     onChange={(e) => {
+//                         setDescription(e.target.value);
+//                         setErrors((prev) => ({ ...prev, description: "" }));
+//                     }}
+//                     placeholder="What happened, where it occurred, who was involved..."
+//                     className={`w-full px-4 py-3 border rounded-[12px] outline-none text-[#64748B] bg-white min-h-[120px] ${errors.description ? "border-red-500" : "border-[#DBEAFE]"
+//                         }`}
+//                 />
+
+//                 {errors.description && (
+//                     <p className="text-red-500 text-xs mt-1">{errors.description}</p>
+//                 )}
+//             </div>
+
+//             <div className="flex gap-3 pt-4">
+//                 <button
+//                     type="button"
+//                     onClick={onPrev}
+//                     className="px-6 py-2 bg-[#64748B] text-white font-medium rounded hover:bg-[#475569]"
+//                 >
+//                     Prev
+//                 </button>
+
+//                 <button
+//                     type="submit"
+//                     className="px-6 py-2 bg-[#2563EB] text-white font-medium rounded hover:bg-[#1d4ed8]"
+//                 >
+//                     Next
+//                 </button>
+//             </div>
+//         </form>
+//     );
+// };
+
+// export default StepTwo;
+
+
+
+
 "use client";
 import React from "react";
 import insurer from "../../../public/insurer.svg";
@@ -261,6 +429,7 @@ const StepTwo: React.FC<StepProps> = ({ onNext, onPrev }) => {
                         setErrors((prev) => ({ ...prev, incidentDate: "" }));
                     }}
                     placeholder="The date the damage, incident or loss occurred"
+                    getPopupContainer={(trigger) => trigger.parentElement!}
                     className={`w-full rounded-[12px] ${errors.incidentDate ? "border-red-500" : "border-[#DBEAFE]"
                         }`}
                     style={{ paddingTop: "10px", paddingBottom: "10px" }}
@@ -285,6 +454,7 @@ const StepTwo: React.FC<StepProps> = ({ onNext, onPrev }) => {
                         setErrors((prev) => ({ ...prev, reportDate: "" }));
                     }}
                     placeholder="This helps us understand whether delay is relevant"
+                    getPopupContainer={(trigger) => trigger.parentElement!}
                     className={`w-full rounded-[12px] ${errors.incidentDate ? "border-red-500" : "border-[#DBEAFE]"
                         }`}
                     style={{ paddingTop: "10px", paddingBottom: "10px" }}

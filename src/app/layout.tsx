@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from 'next/font/google';
 import "./globals.css";
+{/* <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"></meta> */}
 
 // Nunito Font Configuration
 const nunito = Nunito({

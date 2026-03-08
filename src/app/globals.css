@@ -6,7 +6,7 @@
 :root {
   /* Font Variables */
   --font-nunito: 'Nunito', sans-serif;
-  
+
   /* Color Variables */
   --white: #ffffff;
   --black: #171717;
@@ -14,11 +14,11 @@
   --primary_text: #1e1e1e;
   --secondary_text: #555555;
   --brand_color: #2563EB;
-  --brand_hover: #001E4D; 
-  --soft_brand_tint: #e6ecf5; 
-  --success_color: #28a745; 
+  --brand_hover: #001E4D;
+  --soft_brand_tint: #e6ecf5;
+  --success_color: #28a745;
   --error_color: #bf0a30;
-  
+
   /* Font Weights */
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
@@ -31,16 +31,36 @@
   border-radius: 12px;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  touch-action: manipulation;
+}
+
+/* Prevent iOS zoom on focus */
+input,
+select,
+textarea,
+.ant-picker-input>input {
+  font-size: 16px !important;
+}
+
+.ant-picker-popup {
+  z-index: 1000;
+}
+
 /* Tailwind Theme Extension */
 @theme {
   /* Font Family */
   --font-family-nunito: var(--font-nunito);
   --font-sans: var(--font-nunito);
-  
+
   /* Font Weights */
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  
+
   /* Colors */
   --color-white: var(--white);
   --color-black: var(--black);
@@ -84,13 +104,14 @@ body {
 .bg-brand {
   background-color: var(--brand_color);
 }
+
 .text-brand {
   color: var(--brand_color);
 }
 
 .default-text {
   color: #64748B;
-  font-size: 14px;      
+  font-size: 14px;
   line-height: 120%;
 }
 
@@ -116,9 +137,10 @@ body {
     font-size: 16px;
   }
 }
+
 .default-list-text {
   color: #64748B;
-  font-size: 14px;      
+  font-size: 14px;
   line-height: 120%;
 }
 
@@ -140,10 +162,11 @@ body {
   background-color: var(--brand_hover);
 }
 
-.nav-container{
+.nav-container {
   @apply container mx-auto px-4 sm:px-6 lg:px-8
 }
-.web-container{
+
+.web-container {
   @apply container mx-auto px-4 sm:px-6 lg:px-8
 }
 
@@ -151,11 +174,12 @@ body {
   @apply py-12 md:py-20 lg:py-28
 }
 
-.PhoneInputInput{
-   border: none !important;
-   outline: none !important;
+.PhoneInputInput {
+  border: none !important;
+  outline: none !important;
   /* :focus { outline: none !important; box-shadow: none !important; } */
 }
+
 .PhoneInputCountrySelect {
   border: none !important;
 }
