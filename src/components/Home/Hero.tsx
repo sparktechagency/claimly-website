@@ -18,7 +18,7 @@ const Hero = () => {
               <div className="w-3 h-3 bg-[#22C55E] rounded-full "></div>
             </div>
             <p className="tracking-[1px] leading-[120%] text-black">
-             Start for free
+              Start for free
             </p>
           </div>
           <div className="flex flex-col gap-6 md:gap-9 ">
@@ -29,7 +29,9 @@ const Hero = () => {
             </h1>
             <div className="flex flex-col gap-4">
               <p className="default-text leading-normal!">
-                Fill out a short form, upload your documents and Claimly will provide you with a plain-English report on how your insurer may view your claim, what information usually matters most, and how similar situations may typically be treated.
+                At Claimly, we independently review your claim, apply our industry
+                experience, and provide a clear, plain-English report explaining how your insurer is assessing the
+                situation and what options may be available to you.
               </p>
               <p className="default-text">
                 Prepared and delivered within 24 to 48 hours.
