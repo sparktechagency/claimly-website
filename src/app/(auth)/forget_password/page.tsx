@@ -73,7 +73,7 @@ const Page: React.FC = () => {
                     <div className="flex flex-col gap-2">
                         <h1 className="text-[#222831]/80 text-3xl">Verify Your Email</h1>
                         <p className="text-[#64748B] text-sm">
-                            We sent a 6-digit code to your email
+                            We will send you a a 6-digit code to your email
                         </p>
                     </div>
 
