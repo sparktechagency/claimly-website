@@ -100,7 +100,7 @@ const TestimonialCarousel: React.FC = memo(() => {
 
     return (
         <div
-            className="w-full container flex-col gap-8 mx-auto my-4 flex items-center justify-center md:h-[calc(100vh-200px)] bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden"
+            className="w-full container flex-col gap-8 mx-auto my-4 py-12 md:py-8 flex items-center justify-center xl:min-h-[calc(100vh-200px)] md:min-h-[600px] min-h-[500px] bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden"
             role="region"
             aria-label="Testimonials carousel"
         >

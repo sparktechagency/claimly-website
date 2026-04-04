@@ -50,9 +50,6 @@ const Page: React.FC = () => {
             });
         }
     }
-
-
-
     return (
         <div className="max-w-4xl w-full mx-auto">
             <div className="flex items-center gap-8">
